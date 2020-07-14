@@ -1,3 +1,27 @@
+
+
+## VulcaNet peçaZap
+
+Um dos Services as a Software ([SaaS](https://blog.deskmanager.com.br/o-que-e-saas/)) da VulcaNet é o [peçaZap](https://pecazap.com.br/). Nesta aplicação, o usuário consegue receber mensagens em vários canais de comunicação tudo em uma tela só.
+Por exemplo, você cadastra seu número do WhatsApp, e-mail e Instagram e pode enviar e receber mensagens em todos esses meios sem precisar ficar gerenciando várias abas e contas.
+Por isso, o peçaZap ajuda na agilização do atendimento ao cliente, fazendo com que você não perca venda para um concorrente que atenda mais rápido.
+
+<p align="center">
+  <img alt="GitHub language count" src="https://img.shields.io/github/languages/count/remulocosta/desafio2-frontend-vulcanet">
+
+  <img alt="Repository size" src="https://img.shields.io/github/repo-size/remulocosta/desafio2-frontend-vulcanet">
+
+  <a href="https://github.com/remulocosta/desafio1-frontend-vulcanet/commits/master">
+    <img alt="GitHub last commit" src="https://img.shields.io/github/last-commit/remulocosta/desafio2-frontend-vulcanet">
+  </a>
+
+  <a href="https://github.com/remulocosta/desafio1-frontend-vulcanet/issues">
+    <img alt="Repository issues" src="https://img.shields.io/github/issues/remulocosta/desafio2-frontend-vulcanet">
+  </a>
+</p>
+
+
+
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
 
 ## Available Scripts
