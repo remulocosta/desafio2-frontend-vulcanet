@@ -1,6 +1,8 @@
 {
   "name": "desafio-2",
   "version": "0.1.0",
+  "description": "App Dashboard peçaZap",
+  "author": "Remulo Costa <remulo.costa@gmail.com>",
   "private": true,
   "dependencies": {
     "@testing-library/jest-dom": "^4.2.4",
