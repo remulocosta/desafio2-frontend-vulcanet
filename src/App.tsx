@@ -1,15 +1,14 @@
 import React from 'react';
+import { BrowserRouter as Router } from 'react-router-dom';
 
-import Dashboard from './pages/Dashboard';
-// import SignIn from './pages/SignIn';
+import Routes from './routes';
 import GlobalStyle from './styles/global';
 
 const App: React.FC = () => (
-  <>
-    {/* <SignIn /> */}
-    <Dashboard />
+  <Router>
+    <Routes />
     <GlobalStyle />
-  </>
+  </Router>
 );
 
 export default App;
