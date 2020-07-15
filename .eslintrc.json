@@ -32,6 +32,7 @@
     "rules": {
         "no-alert": "off",
         "no-console": "off",
+        "camelcase": "off",
         "no-underscore-dangle": "off",
         "no-useless-constructor": "off",
         "prettier/prettier": "error",
