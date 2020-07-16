@@ -12,13 +12,14 @@ const rotate = keyframes`
 `;
 
 export const Container = styled.button`
-  background: #00a7cf;
-  height: 56px;
+  background: var(--blue);
+  height: 38px;
   width: 100%;
-  border-radius: 10px;
+  border-radius: 4px;
   border: 0;
-  padding: 0 16px;
-  color: #ffffff;
+  padding: 0 20px;
+  color: var(--white);
+  font-size: 15px;
   font-weight: bold;
   margin-top: 16px;
   transition: background-color 0.2s;
@@ -27,7 +28,7 @@ export const Container = styled.button`
   justify-content: center;
 
   &:hover {
-    background: ${shade(0.2, '#00A7CF')};
+    background: ${shade(0.2, '#00A7CF')}; /* var(--blue-dark); */
   }
 
   svg .loading {

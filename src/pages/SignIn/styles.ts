@@ -4,7 +4,7 @@ import styled, { keyframes } from 'styled-components';
 import signInBackgroundImg from '../../assets/background.png';
 
 export const Container = styled.div`
-  height: 100vh;
+  height: 100%;
 
   display: flex;
   align-items: stretch;
@@ -39,45 +39,25 @@ export const AnimationContainer = styled.div`
 
   & > img {
     width: 100%;
-    padding: 0 12px;
+    padding: 0 20px;
   }
 
   form {
-    margin: 24px 0;
+    margin: 16px 0;
     width: 296px;
     text-align: center;
-
-    h1 {
-      margin-bottom: 24px;
-    }
 
     a {
       color: #999999;
       display: block;
-      margin-top: 24px;
+      margin-top: 20px;
+      font-size: 15px;
       text-decoration: none;
       transition: color 0.2s;
 
       &:hover {
         color: ${shade(0.2, '#f4ede8')};
       }
-    }
-  }
-
-  > a {
-    color: #636466;
-    display: flex;
-    align-items: center;
-    margin-top: 24px;
-    text-decoration: none;
-    transition: color 0.2s;
-
-    &:hover {
-      color: ${shade(0.2, '#636466')};
-    }
-
-    svg {
-      margin-right: 16px;
     }
   }
 `;
@@ -87,7 +67,7 @@ export const ContentChannels = styled.div`
   align-items: center;
   justify-content: space-around;
 
-  margin-bottom: 24px;
+  margin-bottom: 20px;
 `;
 
 export const Background = styled.div`

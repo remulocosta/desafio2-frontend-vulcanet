@@ -7,7 +7,7 @@ import { FormHandles } from '@unform/core';
 import { Form } from '@unform/web';
 
 import email from '../../assets/email.png';
-import logoImg from '../../assets/pecaZap-positivo.svg';
+import logoImg from '../../assets/pecazap-positivo.svg';
 import skype from '../../assets/skype.png';
 import telefone from '../../assets/telefone.png';
 import webchat from '../../assets/webchat.png';

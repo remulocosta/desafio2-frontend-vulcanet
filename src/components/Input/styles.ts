@@ -9,14 +9,14 @@ interface IContainerProps {
 }
 
 export const Container = styled.div<IContainerProps>`
-  background: #FFF;
-  border-radius: 10px;
-  border: 2px solid #E0E7ED;
-  padding: 16px;
+  background: var(--white);
+  border-radius: 4px;
+  border: 2px solid var(--border);
+  padding: 8px;
   width: 100%;
   display: flex;
   align-items: center;
-  color: #C7D7E2;
+  color: var(--placeholder);
 
   & + div {
     margin-top: 8px;
@@ -25,20 +25,20 @@ export const Container = styled.div<IContainerProps>`
   ${(props) =>
     props.isErrored &&
     css`
-      border-color: #c53030;
+      border-color: var(--red);
     `}
 
   ${(props) =>
     props.isFocused &&
     css`
-      color: #636466;
-      border-color: #636466;
+      color: var(--blue-dark);
+      border-color: var(--blue-dark);
     `}
 
   ${(props) =>
     props.isFilled &&
     css`
-      color: #636466;
+      color: var(--gray);
     `}
 
 
@@ -46,15 +46,16 @@ export const Container = styled.div<IContainerProps>`
     flex: 1;
     background: transparent;
     border: 0;
-    color: #636466;
+    color: var(--gray);
 
     &::placeholder {
-      color: #C7D7E2;
+      color: var(--placeholder);
     }
   }
 
   svg {
-    margin-right: 16px;
+    margin-right: 20px;
+    margin-left: 10px;
   }
 `;
 
@@ -67,11 +68,11 @@ export const Error = styled(Tooltip)`
   }
 
   span {
-    background: #c53030;
-    color: #fff;
+    background: var(--red);
+    color: var(--white);
 
     &::before {
-      border-color: #c53030 transparent;
+      border-color: var(--red) transparent;
     }
   }
 `;
