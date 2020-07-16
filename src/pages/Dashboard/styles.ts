@@ -3,10 +3,10 @@ import styled from 'styled-components';
 import sidebarBackgroundImg from '../../assets/union.png';
 
 export const Container = styled.div`
-  width: 100vw;
-  height: 100vh;
-  background-color: var(--primary);
   display: flex;
+  width: 100%;
+  height: 100%;
+  background-color: var(--primary);
 `;
 export const ContentSidebar = styled.div`
   width: 310px;
@@ -14,7 +14,8 @@ export const ContentSidebar = styled.div`
   /* padding: 10px 15px 0 15px; */
   padding-top: 10px;
   background: url(${sidebarBackgroundImg}) no-repeat;
-  background-position-y: calc(100% + 30px);
+  /* background-position-y: calc(100% - 100px); */
+  background-position-y: 668px;
   background-size: 120%;
 `;
 
@@ -137,69 +138,129 @@ export const ContentCustomersHeader = styled.div`
 
 export const Customers = styled.div``;
 
-export const Customer = styled.div`
-  display: flex;
-  align-items: center;
-  padding: 10px 15px;
-  transition: background-color 0.4s;
-  cursor: pointer;
-
-  img {
-    width: 48px;
-    height: 48px;
-    border-radius: 50%;
-  }
-
-  &.active,
-  &:hover {
-    background-color: rgba(0, 0, 0, 0.08);
-  }
-
-  &.active {
-    cursor: not-allowed;
-  }
-
-  > span {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    margin-left: auto;
-    margin-right: 8px;
-    min-width: 24px;
-    min-height: 24px;
-    background: var(--red);
-    color: var(--white);
-    border-radius: 50%;
-    border: 2px solid var(--white);
-    font-size: 10px;
-    font-weight: bold;
-  }
-`;
-
-export const CustomerInfo = styled.div`
-  display: flex;
-  flex-direction: column;
-  margin-left: 10px;
-
-  strong {
-    font-weight: bold;
-    font-size: 15px;
-    line-height: 16px;
-    color: var(--white);
-  }
-
-  span {
-    font-size: 12px;
-    line-height: 16px;
-    text-transform: uppercase;
-    color: var(--tertiary);
-  }
-`;
-
 export const ContentAttendance = styled.main`
   flex: 1;
   margin-top: 10px;
   background-color: var(--background);
   border-radius: 20px 0px 0px 0px;
-  border: 1px solid red;
+  box-shadow: -2px 0px 4px rgba(0, 0, 0, 0.1);
+`;
+
+export const ContentChannels = styled.div`
+  display: flex;
+  flex-direction: column;
+
+  width: 64px;
+  height: 100%;
+
+  background: var(--secondary);
+  box-shadow: 2px 0px 2px rgba(0, 0, 0, 0.04);
+  border-radius: 20px 0px 0px 0px;
+
+  > :first-child {
+    border-radius: 20px 0px 0px 0px;
+  }
+
+  button {
+    position: relative;
+    border: 0;
+    background: transparent;
+
+    width: 64px;
+    height: 64px;
+
+    svg {
+      width: 64px;
+      height: 64px;
+      padding: 19px;
+
+      span {
+        color: #000;
+        z-index: -1;
+        position: absolute;
+      }
+
+      &.calendar {
+        color: var(--blue);
+
+        &:hover {
+          color: var(--white);
+          background: var(--blue);
+          border-radius: 20px 0px 0px 0px;
+        }
+      }
+
+      &.whatsapp {
+        color: var(--whatsapp);
+
+        &.selected,
+        &:hover {
+          color: var(--white);
+          background: var(--whatsapp);
+        }
+      }
+
+      &.email {
+        color: var(--email);
+
+        &.selected,
+        &:hover {
+          color: var(--white);
+          background: var(--email);
+        }
+      }
+
+      &.skype {
+        color: var(--skype);
+
+        &.selected,
+        &:hover {
+          color: var(--white);
+          background: var(--skype);
+        }
+      }
+
+      &.telefone {
+        color: var(--telefone);
+
+        &.selected,
+        &:hover {
+          color: var(--white);
+          background: var(--telefone);
+        }
+      }
+
+      &.webchat {
+        color: var(--webchat);
+
+        &.selected,
+        &:hover {
+          color: var(--white);
+          background: var(--webchat);
+        }
+      }
+    }
+
+    span {
+      position: absolute;
+      top: calc(100% - 20px);
+      left: calc(100% - 20px);
+
+      display: flex;
+      align-items: center;
+      justify-content: center;
+
+      min-width: 16px;
+      min-height: 16px;
+      padding: 0;
+
+      background: var(--red);
+      color: var(--white);
+      border-radius: 50%;
+      border: 2px solid var(--border);
+
+      font-size: 10px;
+      font-weight: bold;
+    }
+  }
 `;

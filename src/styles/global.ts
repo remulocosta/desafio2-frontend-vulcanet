@@ -24,6 +24,7 @@ export default createGlobalStyle`
 
     --avatar: rgba(255, 255, 255, 0.2);
     --background: #F5F8FA;
+    --border-span:  #a8c9c6;/* rgba(255, 255, 255, 0.8); */
 
     --font-secondary: #333333;
     --font-tertiary: #999999;
@@ -50,11 +51,11 @@ export default createGlobalStyle`
   }
 
   html, body, #root {
-    max-height: 100vh;
-    max-width: 100vw;
+    max-width: 1920px;
+    max-height: 1080;
 
-    width: 100%;
-    height: 100%;
+    width: 1920px;
+    height: 1080px;
   }
 
   body, input, button, p, span {
