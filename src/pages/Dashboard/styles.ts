@@ -71,13 +71,16 @@ export const UserInfo = styled.div`
 `;
 
 export const ContentSearch = styled.div`
+  display: flex;
+  align-items: center;
+
   background: rgba(255, 255, 255, 0.15);
   border: 1px solid rgba(0, 0, 0, 0.05);
   border-radius: 4px;
+
   width: 280px;
   height: 38px;
-  display: flex;
-  align-items: center;
+
   color: var(--white);
   margin: 10px 15px;
 
@@ -111,8 +114,10 @@ export const ContentCustomersHeader = styled.div`
   display: flex;
   align-items: center;
   justify-content: space-between;
+
   width: 100%;
   height: 38px;
+
   color: var(--white);
   padding: 0 15px 10px;
 
@@ -130,8 +135,8 @@ export const ContentCustomersHeader = styled.div`
     cursor: pointer;
 
     &:hover {
-      background: rgba(0, 0, 0, 0.05);
       border-radius: 4px;
+      background: rgba(0, 0, 0, 0.05);
     }
   }
 `;
@@ -139,128 +144,140 @@ export const ContentCustomersHeader = styled.div`
 export const Customers = styled.div``;
 
 export const ContentAttendance = styled.main`
-  flex: 1;
+  display: flex;
+
+  width: 100%;
   margin-top: 10px;
+
   background-color: var(--background);
   border-radius: 20px 0px 0px 0px;
   box-shadow: -2px 0px 4px rgba(0, 0, 0, 0.1);
 `;
 
-export const ContentChannels = styled.div`
+export const ContentMessagesData = styled.div`
   display: flex;
   flex-direction: column;
+  flex: 1;
+`;
 
-  width: 64px;
-  height: 100%;
+export const ContentMessagesHeader = styled.div`
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
 
-  background: var(--secondary);
-  box-shadow: 2px 0px 2px rgba(0, 0, 0, 0.04);
-  border-radius: 20px 0px 0px 0px;
+  height: 64px;
 
-  > :first-child {
-    border-radius: 20px 0px 0px 0px;
+  background: var(--white);
+  box-shadow: 2px 0px 2px rgba(0, 0, 0, 0.02);
+`;
+
+export const InputWrapper = styled.div`
+  display: flex;
+  align-items: center;
+
+  height: 64px;
+
+  margin-bottom: auto;
+
+  background: var(--white);
+  box-shadow: 0px -1px 0px rgba(0, 0, 0, 0.05);
+  border-radius: 0px;
+
+  input {
+    flex: 1;
+    background: transparent;
+    border: 0;
+    color: var(--font-tertiary);
+    margin: 8px 0 8px 30px;
   }
+`;
+
+export const ContentButtonsSendMessage = styled.div`
+  display: flex;
+  margin: 0 20px;
 
   button {
-    position: relative;
-    border: 0;
-    background: transparent;
+    width: 38px;
+    height: 38px;
 
-    width: 64px;
-    height: 64px;
+    font-family: FontAwesome;
+    font-style: normal;
+    font-weight: normal;
+    font-size: 20px;
+    line-height: 16px;
+    /* or 80% */
 
-    svg {
-      width: 64px;
-      height: 64px;
-      padding: 19px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: var(--unticked);
 
-      span {
-        color: #000;
-        z-index: -1;
-        position: absolute;
-      }
-
-      &.calendar {
-        color: var(--blue);
-
-        &:hover {
-          color: var(--white);
-          background: var(--blue);
-          border-radius: 20px 0px 0px 0px;
-        }
-      }
-
-      &.whatsapp {
-        color: var(--whatsapp);
-
-        &.selected,
-        &:hover {
-          color: var(--white);
-          background: var(--whatsapp);
-        }
-      }
-
-      &.email {
-        color: var(--email);
-
-        &.selected,
-        &:hover {
-          color: var(--white);
-          background: var(--email);
-        }
-      }
-
-      &.skype {
-        color: var(--skype);
-
-        &.selected,
-        &:hover {
-          color: var(--white);
-          background: var(--skype);
-        }
-      }
-
-      &.telefone {
-        color: var(--telefone);
-
-        &.selected,
-        &:hover {
-          color: var(--white);
-          background: var(--telefone);
-        }
-      }
-
-      &.webchat {
-        color: var(--webchat);
-
-        &.selected,
-        &:hover {
-          color: var(--white);
-          background: var(--webchat);
-        }
-      }
+    &:hover {
+      color: var(--font-tertiary);
     }
+  }
+`;
 
-    span {
-      position: absolute;
-      top: calc(100% - 20px);
-      left: calc(100% - 20px);
+export const ContentCustomerInfo = styled.div`
+  display: flex;
+  width: 296px;
 
-      display: flex;
-      align-items: center;
-      justify-content: center;
+  background-color: var(--white);
+  box-shadow: -4px 0px 2px rgba(0, 0, 0, 0.02);
+`;
 
-      min-width: 16px;
-      min-height: 16px;
-      padding: 0;
+export const ContentMessages = styled.div`
+  padding: 20px 0 0 88px;
 
-      background: var(--red);
-      color: var(--white);
-      border-radius: 50%;
-      border: 2px solid var(--border);
+  border: 1px solid red;
 
-      font-size: 10px;
-      font-weight: bold;
-    }
+  display: flex;
+  flex: 1;
+  flex-direction: column;
+
+  max-height: calc(100% - 64px - 64px);
+  width: 100%;
+  overflow-y: scroll;
+
+  ::-webkit-scrollbar {
+    width: 8px;
+  }
+
+  ::-webkit-scrollbar-thumb {
+    background-color: var(--primary);
+    border-radius: 4px;
+  }
+
+  ::-webkit-scrollbar-track {
+    background-color: var(--secondary);
+  }
+`;
+
+export const ContentStartAttendance = styled.div`
+  position: relative;
+  width: 100%;
+
+  border: 1px solid green;
+
+  h2 span {
+    margin: 0 auto;
+    padding: 10px 20px;
+    font-size: 15px;
+    line-height: 16px;
+    color: #636466;
+    background: #dbf3f8;
+    box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.1);
+    border-radius: 100px;
+  }
+
+  > h2:after {
+    content: '';
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    height: 0.7em;
+    border-top: 1px solid #dddddd;
+    z-index: -1;
   }
 `;

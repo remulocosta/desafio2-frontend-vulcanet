@@ -24,7 +24,8 @@ export default createGlobalStyle`
 
     --avatar: rgba(255, 255, 255, 0.2);
     --background: #F5F8FA;
-    --border-span:  #a8c9c6;/* rgba(255, 255, 255, 0.8); */
+    --background-sidebar: #E5E5E5;
+    --border-span:  rgba(255, 255, 255, 0.6); /* #a8c9c6;*/
 
     --font-secondary: #333333;
     --font-tertiary: #999999;
@@ -51,19 +52,31 @@ export default createGlobalStyle`
   }
 
   html, body, #root {
-    max-width: 1920px;
+    /* max-width: 1920px;
     max-height: 1080;
 
     width: 1920px;
-    height: 1080px;
+    height: 1080px; */
+
+    max-width: 100vw;
+    max-height: 100vh;
+
+    min-width: calc(1920px * 0.8);
+    min-height: calc(1080px * 0.8);
+
+    width: 100%;
+    height: 100%;
   }
 
   body, input, button, p, span {
     font-family: 'Lato', sans-serif;
     font-size: 16px;
+    background: none;
   }
 
   button {
+    border: 0;
+    background: transparent;
     cursor: pointer;
   }
 `;

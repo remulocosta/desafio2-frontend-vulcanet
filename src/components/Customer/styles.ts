@@ -1,10 +1,10 @@
 import styled from 'styled-components';
 
-interface ITest {
+interface IProps {
   mentions?: number;
 }
 
-export const Container = styled.button<ITest>`
+export const Container = styled.button<IProps>`
 
   display: flex;
   align-items: center;
@@ -58,19 +58,24 @@ export const Container = styled.button<ITest>`
 
     display: ${(props) =>
       props.mentions && props.mentions > 0 ? 'flex' : 'none'};
+
     align-items: center;
     justify-content: center;
     flex-grow: 0;
 
-    background-color: var(--red);
-    width: 20px;
+    width: auto;
+    min-width: 12px;
     height: 20px;
 
     position: absolute;
-    top: calc(100% / 2) - 10px;
+    /* top: calc(100% / 2) - 10px; */
     right: 22px;
 
-    border-radius: 50%;
+    background-color: var(--red);
+    background-clip: padding-box;
+    padding: 0 4px;
+
+    border-radius: 40px;
     border: 2px solid var(--border-span);
 
     font-size: 10px;
