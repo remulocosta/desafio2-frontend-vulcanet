@@ -1,13 +1,6 @@
 import React from 'react';
 
-import {
-  Container,
-  Avatar,
-  Message,
-  Header,
-  Content,
-  SeenIcon,
-} from './styles';
+import { Container, Avatar, Header, SeenIcon } from './styles';
 
 export interface IMessageProps {
   date?: string;
@@ -29,7 +22,6 @@ const ChannelMessage: React.FC<IMessageProps> = ({
   return (
     <Container className={typeMessage}>
       <Header>
-        {/* <Avatar>{imgAvatar && <img src={imgAvatar} alt="avatar" />}</Avatar> */}
         <Avatar>
           <img src={imgAvatar} alt={name} />
         </Avatar>

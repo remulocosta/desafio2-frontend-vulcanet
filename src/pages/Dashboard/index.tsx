@@ -9,7 +9,6 @@ import {
 
 import { format, fromUnixTime } from 'date-fns';
 
-// import SidebarBackgroundImg from '../../assets/union.png';
 import ChannelMessage from '../../components/ChannelMessage';
 import ChannelsContact from '../../components/ChannelsContact';
 import Customer from '../../components/Customer';
@@ -224,13 +223,17 @@ const Dashboard: React.FC = () => {
       const contactsMap = contactsData.map((contact) => {
         let count = 0;
         handleChat.filter((chat) => {
-          if (chat.channel === contact.channel)
-            return chat.messages.filter((msgSeen) => {
+          if (chat.channel === contact.channel) {
+            chat.messages.filter((msgSeen) => {
               if (msgSeen.seen === false) {
                 count += 1;
                 return true;
               }
+              return false;
             });
+            return true;
+          }
+          return false;
         });
         return { ...contact, mentions: count };
       });
@@ -249,6 +252,7 @@ const Dashboard: React.FC = () => {
         ) {
           return true;
         }
+        return false;
       });
 
       setCustomerChat(() => currentCannelChat);
