@@ -227,10 +227,6 @@ export const ContentCustomerInfo = styled.div`
 `;
 
 export const ContentMessages = styled.div`
-  padding: 20px 0 0 88px;
-
-  border: 1px solid red;
-
   display: flex;
   flex: 1;
   flex-direction: column;
@@ -238,6 +234,8 @@ export const ContentMessages = styled.div`
   max-height: calc(100% - 64px - 64px);
   width: 100%;
   overflow-y: scroll;
+
+  padding: 10px;
 
   ::-webkit-scrollbar {
     width: 8px;
@@ -256,28 +254,38 @@ export const ContentMessages = styled.div`
 export const ContentStartAttendance = styled.div`
   position: relative;
   width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
 
-  border: 1px solid green;
+  span::before {
+    content: '';
+    position: absolute;
+    z-index: 1;
 
-  h2 span {
-    margin: 0 auto;
-    padding: 10px 20px;
+    width: 100%;
+    height: 1px;
+
+    left: 0;
+    top: 50%;
+    background: #dddddd;
+  }
+
+  p {
+    z-index: 2;
+    color: #636466;
+
     font-size: 15px;
     line-height: 16px;
-    color: #636466;
+
+    padding: 10px 24px;
+
     background: #dbf3f8;
     box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.1);
     border-radius: 100px;
-  }
 
-  > h2:after {
-    content: '';
-    position: absolute;
-    bottom: 0;
-    left: 0;
-    right: 0;
-    height: 0.7em;
-    border-top: 1px solid #dddddd;
-    z-index: -1;
+    strong {
+      color: #333333;
+    }
   }
 `;

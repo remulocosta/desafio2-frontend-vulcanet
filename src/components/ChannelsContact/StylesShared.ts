@@ -20,6 +20,7 @@ export const Container = styled.button<IPropsButton>`
 
   &.selected,
   &:hover {
+    border-radius: 0;
     color: ${(props) => props.secondarycolor && props.secondarycolor};
     background: ${(props) => props.primarycolor && props.primarycolor};
   }

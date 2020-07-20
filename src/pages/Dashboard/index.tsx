@@ -3,9 +3,10 @@ import { FaCaretDown, FaPlus, FaSearch } from 'react-icons/fa';
 
 import { format, fromUnixTime } from 'date-fns';
 
+import ChannelMessage from '../../components/ChannelMessage';
 import ChannelsContact from '../../components/ChannelsContact';
 import Customer from '../../components/Customer';
-import { Image, Copy, Mic, Plane } from '../../components/IconsSVG';
+import { Pic, Copy, Mic, Plane } from '../../components/IconsSVG';
 import SearchBarMessage from '../../components/SearchBarMessage';
 import SidebarChannel from '../../components/SidebarChannels';
 import api from '../../services/api';
@@ -61,13 +62,13 @@ interface ICustomer {
 interface IContact {
   channel: number;
   type: string;
-  mentions: number;
+  mentions?: number;
 }
 
 interface IMessage {
   seen: boolean;
   timestamp: number;
-  timestampFormatted: string;
+  timestampFormatted?: string;
   body: string;
   type: string;
 }
@@ -78,18 +79,18 @@ interface IChat {
   channel: number;
   subject: string | null;
   start: number;
-  startFormatted: string;
+  startFormatted?: string;
   messages: IMessage[];
-  messagesFormatted: IMessage[];
+  messagesFormatted?: IMessage[];
 }
 
 const Dashboard: React.FC = () => {
   const [user, setUser] = useState<IUser>(); // usuário retornado da api
-  const [contacts, setContacts] = useState<IContact[]>([]); // contacts
+  const [contactsData, setContactsData] = useState<IContact[]>([]); // contacts
   const [chatData, setChatData] = useState<IChat[]>([]); // chat data
   const [customers, setCustomers] = useState<ICustomer[]>([]); // Lista de clientes retornado da api
 
-  const [chatDataCustomer, setChatDataCustomer] = useState<IChat[]>(); // chat data customer
+  const [chatDataCustomer, setChatDataCustomer] = useState<IChat | null>(null); // chat data customer
   const [contactsCustomer, setContactsCustomer] = useState<IContact[]>([]);
   const [customersChat, setCustomersChat] = useState<IChat[]>([]);
 
@@ -99,61 +100,96 @@ const Dashboard: React.FC = () => {
   const messageRef = useRef() as React.MutableRefObject<HTMLDivElement>;
 
   useEffect(() => {
-    // request data user -> refatorar
-    (async () => {
-      const resp = await api.get('/user');
-      const requestUser = resp.data;
+    async function loadUser(): Promise<void> {
+      const reqUserData = await api.get('/user');
 
-      if (requestUser) {
-        setUser(requestUser);
+      if (!reqUserData.data) {
+        console.log('Erro: erro ao retornar user');
       }
-    })();
 
-    // request data constants
-    (async () => {
-      const resp = await api.get('/contacts');
-      const requestContacts = resp.data;
+      setUser(reqUserData.data);
+    }
 
-      if (requestContacts) {
-        setContacts(requestContacts);
+    async function loadContacts(): Promise<void> {
+      const reqContactsData = await api.get<IContact[]>('/contacts');
+
+      if (!reqContactsData) {
+        console.log('Erro: erro ao retornar contacts');
       }
-    })();
 
-    // request data chat
-    (async () => {
-      api.get<IChat[]>('/chats').then((response) => {
-        const chatFormatted = response.data.map((chat) => {
-          return {
-            ...chat,
-            startFormatted: format(fromUnixTime(chat.start), 'dd/MM/yyyy'),
-            messagesFormatted: chat.messages.map((message) => {
-              return {
-                ...message,
-                timestampFormatted: format(
-                  fromUnixTime(message.timestamp),
-                  "dd/MM/yyyy hh'h'mm",
-                ),
-              };
-            }),
-            // .flat(),
-          };
+      setContactsData(reqContactsData.data);
+    }
+
+    async function loadCustomers(): Promise<ICustomer[]> {
+      const reqCustomersData = await api.get<ICustomer[]>('/customers');
+
+      if (!reqCustomersData) {
+        console.log('Erro: erro ao retornar customers');
+      }
+
+      return reqCustomersData.data;
+    }
+
+    async function loadChatCustomer(): Promise<IChat[]> {
+      const reqChatData = await api.get<IChat[]>('/chats');
+
+      if (!reqChatData) {
+        console.log('Erro: erro ao retornar chats');
+      }
+
+      return reqChatData.data;
+    }
+
+    loadUser();
+    loadContacts();
+    loadCustomers().then((resCustomers) => {
+      const resChatData: IChat[] = [];
+
+      loadChatCustomer()
+        .then((reqChat) => {
+          Object.assign(resChatData, [...reqChat]);
+
+          return resChatData.map((resChat) => {
+            return {
+              ...resChat,
+              startFormatted: format(fromUnixTime(resChat.start), 'dd/MM/yyyy'),
+              messagesFormatted: resChat.messages.map<IMessage>((msg) => {
+                return {
+                  ...msg,
+                  timestampFormatted: format(
+                    fromUnixTime(msg.timestamp),
+                    "dd/MM/yyyy hh'h'mm",
+                  ),
+                };
+              }),
+            };
+          });
+        })
+        .then((formattedChat) => {
+          // result chat formatted
+          setChatData(formattedChat);
+          return formattedChat;
+        })
+        .then((resFormattedChat) => {
+          const mapCustomer = resCustomers.map((customer) => {
+            const messagesResult = resFormattedChat
+              .filter((msgCustomer) => {
+                return msgCustomer.customer === customer.id;
+              })
+              .filter((msgSeen) => {
+                return (
+                  msgSeen.messages.filter((linha) => {
+                    return linha.seen === false;
+                  }).length > 0
+                );
+              });
+
+            return { ...customer, mentions: messagesResult.length };
+          });
+
+          setCustomers(mapCustomer);
         });
-
-        setChatData(chatFormatted);
-      });
-    })();
-
-    // request data customers
-    (async () => {
-      const resp = await api.get('/customers');
-      const requestCustomers = resp.data;
-
-      if (requestCustomers) {
-        setCustomers(requestCustomers);
-      }
-
-      return resp;
-    })();
+    });
   }, []);
 
   useEffect(() => {
@@ -174,12 +210,16 @@ const Dashboard: React.FC = () => {
         return;
       }
 
-      const customerChatFilter = chatData.filter(
-        (chat) => chat.customer === customer.id,
-      );
+      const customerChatFilter = chatData.filter((chat) => {
+        return chat.customer === customer.id;
+      })[0];
 
       setSelectedCustomer(() => customer);
-      setChatDataCustomer(customerChatFilter);
+
+      if (customerChatFilter) {
+        setChatDataCustomer(() => customerChatFilter);
+        console.log(customerChatFilter);
+      }
     },
     [chatData, selectedCustomer],
   );
@@ -218,8 +258,7 @@ const Dashboard: React.FC = () => {
                   name: customer.name,
                   company: customer.company,
                   photo: customer.photo,
-                  // mentions: 2,
-                  mentions: Math.floor(Math.random() * 1101),
+                  mentions: customer.mentions,
                 }}
                 onClick={() => handleSelectCustomer(customer)}
               />
@@ -232,7 +271,7 @@ const Dashboard: React.FC = () => {
         <SidebarChannel>
           {selectedCustomer && selectedCustomer ? (
             <>
-              {contacts?.map(({ channel, type, mentions }) => (
+              {contactsCustomer?.map(({ channel, type, mentions }) => (
                 <ChannelsContact
                   key={channel}
                   typeBtn={type}
@@ -244,13 +283,12 @@ const Dashboard: React.FC = () => {
             </>
           ) : (
             <>
-              {contacts?.map(({ channel, type }) => (
+              {contactsData?.map(({ channel, type }) => (
                 <ChannelsContact
                   key={channel}
                   typeBtn={type}
                   selected={selectedChannel === channel}
                   // mentions={Math.floor(Math.random() * 1101)}
-                  mentions={Math.floor(Math.random() * 11)}
                   onClick={() => handleSelectChannel(channel)}
                 />
               ))}
@@ -265,27 +303,19 @@ const Dashboard: React.FC = () => {
 
           <ContentMessages ref={messageRef}>
             <ContentStartAttendance>
-              <h2>
-                <span>Featured producfewfwefwefwets</span>
-                <span>Featured producfewfwefwefwets</span>
-                <span>Featured producfewfwefwefwets</span>
-                <span>Featured producfewfwefwefwets</span>
-              </h2>
-            </ContentStartAttendance>
-            <ContentStartAttendance>
-              <h2>
-                <span>Featured producfewfwefwefwets</span>
-                <span>Featured producfewfwefwefwets</span>
-                <span>Featured producfewfwefwefwets</span>
-                <span>Featured producfewfwefwefwets</span>
-              </h2>
+              <p>
+                Atendimento iniciado em <strong>{chatDataCustomer}</strong>
+              </p>
+              <span />
             </ContentStartAttendance>
 
-            <ContentStartAttendance>
-              <h2>
-                <span>Featured producfewfwefwefwets</span>
-              </h2>
-            </ContentStartAttendance>
+            <ChannelMessage typeMessage="income" seen />
+            <ChannelMessage typeMessage="outcome" />
+            <ChannelMessage typeMessage="income" seen />
+            <ChannelMessage typeMessage="outcome" />
+            <ChannelMessage typeMessage="income" />
+            <ChannelMessage typeMessage="outcome" />
+            <ChannelMessage typeMessage="outcome" />
           </ContentMessages>
 
           <InputWrapper>
@@ -296,7 +326,7 @@ const Dashboard: React.FC = () => {
             />
             <ContentButtonsSendMessage>
               <button type="button">
-                <Image />
+                <Pic />
               </button>
               <button type="button">
                 <Copy />
