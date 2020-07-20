@@ -15,6 +15,7 @@ import Customer from '../../components/Customer';
 import { Pic, Copy, Mic, Plane } from '../../components/IconsSVG';
 import SearchBarMessage from '../../components/SearchBarMessage';
 import SidebarChannel from '../../components/SidebarChannels';
+import { useAuth } from '../../hooks/auth';
 import api from '../../services/api';
 import {
   Container,
@@ -104,7 +105,8 @@ interface IChat {
 }
 
 const Dashboard: React.FC = () => {
-  const [user, setUser] = useState<IUser>(); // usuário retornado da api
+  const { signOut, user } = useAuth();
+  // const [userData, setUserData] = useState<IUser>(); // usuário retornado da api
   const [contactsData, setContactsData] = useState<IContact[]>([]); // contacts
   const [chatData, setChatData] = useState<IChat[]>([]); // chat data
   const [customers, setCustomers] = useState<ICustomer[]>([]); // Lista de clientes retornado da api
@@ -118,16 +120,6 @@ const Dashboard: React.FC = () => {
   const messageRef = useRef() as React.MutableRefObject<HTMLDivElement>;
 
   useEffect(() => {
-    async function loadUser(): Promise<void> {
-      const reqUserData = await api.get('/user');
-
-      if (!reqUserData.data) {
-        console.log('Erro: erro ao retornar user');
-      }
-
-      setUser(reqUserData.data);
-    }
-
     async function loadContacts(): Promise<void> {
       const reqContactsData = await api.get<IContact[]>('/contacts');
 
@@ -158,7 +150,6 @@ const Dashboard: React.FC = () => {
       return reqChatData.data;
     }
 
-    loadUser();
     loadContacts();
     loadCustomers().then((resCustomers) => {
       const resChatData: IChat[] = [];
@@ -300,7 +291,7 @@ const Dashboard: React.FC = () => {
             <strong>{user?.name}</strong>
             <span>{user?.company}</span>
           </UserInfo>
-          <button type="button">
+          <button type="button" onClick={signOut}>
             <FaCaretDown />
           </button>
         </ContentUser>

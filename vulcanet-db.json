@@ -159,11 +159,13 @@
             ]
         }
     ],
-    "user": {
+    "user":
+    {
         "name": "Carlos Correa",
         "user": "carloscorrea",
         "password": "carloscorrea",
         "company": "Premium peças",
         "photo": "https://ui-avatars.com/api/?name=Carlos+Correa"
     }
+
 }
