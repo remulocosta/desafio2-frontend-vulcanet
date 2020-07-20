@@ -1,6 +1,11 @@
 import styled from 'styled-components';
 
+import Email from '../../assets/email.png';
+import Skype from '../../assets/skype.png';
+import Telefone from '../../assets/telefone.png';
 import sidebarBackgroundImg from '../../assets/union.png';
+import Webchat from '../../assets/webchat.png';
+import Whatsapp from '../../assets/whatsapp.png';
 
 export const Container = styled.div`
   display: flex;
@@ -29,8 +34,9 @@ export const ContentUser = styled.div`
   img {
     width: 32px;
     height: 32px;
-    border-radius: 50%;
+    border-radius: 100px;
     margin-right: 10px;
+    background-color: var(--gray);
   }
 
   button {
@@ -218,14 +224,6 @@ export const ContentButtonsSendMessage = styled.div`
   }
 `;
 
-export const ContentCustomerInfo = styled.div`
-  display: flex;
-  width: 296px;
-
-  background-color: var(--white);
-  box-shadow: -4px 0px 2px rgba(0, 0, 0, 0.02);
-`;
-
 export const ContentMessages = styled.div`
   display: flex;
   flex: 1;
@@ -287,5 +285,205 @@ export const ContentStartAttendance = styled.div`
     strong {
       color: #333333;
     }
+  }
+`;
+
+export const ContentCustomerInfo = styled.div`
+  display: flex;
+  flex-direction: column;
+  width: 296px;
+
+  padding: 20px;
+
+  background-color: var(--white);
+  box-shadow: -4px 0px 2px rgba(0, 0, 0, 0.02);
+`;
+
+export const CustomerInfoData = styled.div`
+  display: flex;
+  align-items: center;
+  color: var(--black);
+
+  height: 70px;
+  margin-bottom: 20px;
+
+  & img {
+    width: 64px;
+    height: 64px;
+    border-radius: 100px;
+  }
+`;
+
+export const CustomerInfo = styled.div`
+  display: flex;
+
+  flex-direction: column;
+  margin-left: 10px;
+
+  & strong {
+    font-weight: bold;
+    font-size: 15px;
+    line-height: 14px;
+    margin-bottom: 6px;
+  }
+
+  & span {
+    font-weight: bold;
+    font-size: 12px;
+    line-height: 18px;
+
+    color: var(--quinary);
+  }
+`;
+
+export const ButtonsWrapper = styled.div`
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+
+  & button {
+    width: 123px;
+    height: 38px;
+
+    background: #ffffff;
+    border: 1px solid #e5e5e5;
+    box-sizing: border-box;
+    box-shadow: 0px 1px 0px #e5e5e5;
+    border-radius: 4px;
+  }
+
+  .btn-edit {
+    color: var(--blue);
+  }
+
+  .btn-delete {
+    color: var(--red);
+  }
+`;
+
+export const ContentLastAttendance = styled.div`
+  margin-top: 20px;
+`;
+
+export const HeaderLastAttendance = styled.div`
+  font-weight: bold;
+  font-size: 12px;
+  line-height: 22px;
+
+  text-transform: uppercase;
+
+  color: var(--quinary);
+`;
+
+export const IconAttendance = styled.div`
+  color: var(--unticked);
+
+  width: 16px;
+  height: 16px;
+
+  margin-right: 10px;
+
+  background-size: contain, cover;
+
+  &.whatsapp {
+    background-image: url(${Whatsapp});
+  }
+  &.email {
+    background-image: url(${Email});
+  }
+  &.skype {
+    background-image: url(${Skype});
+  }
+  &.telefone {
+    background-image: url(${Telefone});
+  }
+  &.webchat {
+    background-image: url(${Webchat});
+  }
+`;
+
+export const LastAttendance = styled.div`
+  display: flex;
+  align-items: center;
+
+  margin: 20px 0;
+`;
+
+export const ContentObservation = styled.div`
+  & span {
+    font-weight: normal;
+    font-size: 14px;
+    line-height: 22px;
+  }
+`;
+
+export const Headerobservation = styled.div`
+  font-weight: bold;
+  font-size: 12px;
+  line-height: 22px;
+
+  text-transform: uppercase;
+
+  color: var(--quinary);
+`;
+
+export const ContentCustomerContacts = styled.div`
+  display: flex;
+  flex-direction: column;
+  margin-top: 20px;
+`;
+
+export const ContactInfo = styled.div`
+  display: flex;
+  align-items: center;
+  margin: 8px 0;
+`;
+
+export const IconCustomerContacts = styled.div`
+  color: var(--unticked);
+
+  width: 24px;
+  height: 24px;
+
+  background-size: contain, cover;
+
+  &.whatsapp {
+    background-image: url(${Whatsapp});
+  }
+  &.email {
+    background-image: url(${Email});
+  }
+  &.skype {
+    background-image: url(${Skype});
+  }
+  &.telefone {
+    background-image: url(${Telefone});
+  }
+  &.webchat {
+    background-image: url(${Webchat});
+  }
+`;
+
+export const ContentRowContacts = styled.div`
+  display: flex;
+  flex-direction: column;
+
+  color: var(--black);
+
+  margin-left: 16px;
+
+  strong {
+    font-weight: bold;
+    font-size: 12px;
+    /* line-height: 18px; */
+
+    text-transform: uppercase;
+
+    color: var(--quinary);
+  }
+
+  span {
+    font-size: 15px;
+    /* line-height: 18px; */
   }
 `;

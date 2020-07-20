@@ -38,7 +38,7 @@ const ChannelMessage: React.FC<IMessageProps> = ({
         <time>{date}</time>
         <SeenIcon
           className={
-            seen ? 'seen' : `${typeMessage === 'income' ? '' : 'seen'}`
+            seen ? 'seen' : `${typeMessage === 'incoming' ? '' : 'seen'}`
           }
         />
       </Header>

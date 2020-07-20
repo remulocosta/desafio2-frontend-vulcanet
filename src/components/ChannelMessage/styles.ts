@@ -7,7 +7,7 @@ export const Container = styled.div`
   flex-direction: column;
   margin: 8px 2px;
 
-  &.income {
+  &.incoming {
     align-items: flex-start;
 
     > header {
@@ -49,7 +49,7 @@ export const Container = styled.div`
     }
   }
 
-  &.outcome {
+  &.outgoing {
     align-items: flex-end;
 
     > header {

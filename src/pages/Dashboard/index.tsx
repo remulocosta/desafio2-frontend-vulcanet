@@ -1,5 +1,11 @@
 import React, { useState, useCallback, useEffect, useRef } from 'react';
-import { FaCaretDown, FaPlus, FaSearch } from 'react-icons/fa';
+import {
+  FaCaretDown,
+  FaPlus,
+  FaSearch,
+  FaTrashAlt,
+  FaPencilAlt,
+} from 'react-icons/fa';
 
 import { format, fromUnixTime } from 'date-fns';
 
@@ -27,6 +33,19 @@ import {
   ContentButtonsSendMessage,
   ContentCustomerInfo,
   ContentStartAttendance,
+  CustomerInfo,
+  CustomerInfoData,
+  ButtonsWrapper,
+  ContentLastAttendance,
+  HeaderLastAttendance,
+  IconAttendance,
+  LastAttendance,
+  ContentObservation,
+  Headerobservation,
+  ContentCustomerContacts,
+  IconCustomerContacts,
+  ContentRowContacts,
+  ContactInfo,
 } from './styles';
 
 interface IUser {
@@ -68,7 +87,7 @@ interface IContact {
 interface IMessage {
   seen: boolean;
   timestamp: number;
-  timestampFormatted?: string;
+  timestampFormatted: string;
   body: string;
   type: string;
 }
@@ -79,9 +98,9 @@ interface IChat {
   channel: number;
   subject: string | null;
   start: number;
-  startFormatted?: string;
+  startFormatted: string;
   messages: IMessage[];
-  messagesFormatted?: IMessage[];
+  messagesFormatted: IMessage[];
 }
 
 const Dashboard: React.FC = () => {
@@ -90,12 +109,11 @@ const Dashboard: React.FC = () => {
   const [chatData, setChatData] = useState<IChat[]>([]); // chat data
   const [customers, setCustomers] = useState<ICustomer[]>([]); // Lista de clientes retornado da api
 
-  const [chatDataCustomer, setChatDataCustomer] = useState<IChat | null>(null); // chat data customer
   const [contactsCustomer, setContactsCustomer] = useState<IContact[]>([]);
-  const [customersChat, setCustomersChat] = useState<IChat[]>([]);
+  const [customerChat, setCustomerChat] = useState<IChat[]>([]);
 
   const [selectedCustomer, setSelectedCustomer] = useState<ICustomer>();
-  const [selectedChannel, setSelectedChannel] = useState(1);
+  const [selectedChannel, setSelectedChannel] = useState(0);
 
   const messageRef = useRef() as React.MutableRefObject<HTMLDivElement>;
 
@@ -200,9 +218,53 @@ const Dashboard: React.FC = () => {
     }
   }, [messageRef]);
 
-  const handleSelectChannel = useCallback((channel) => {
-    setSelectedChannel(channel);
-  }, []);
+  const handleSetCustomerChannels = useCallback(
+    (handleChat: IChat[]) => {
+      const contactsMap = contactsData.map((contact) => {
+        let count = 0;
+        handleChat.filter((chat) => {
+          if (chat.channel === contact.channel)
+            return chat.messages.filter((msgSeen) => {
+              if (msgSeen.seen === false) {
+                count += 1;
+                return true;
+              }
+            });
+        });
+        return { ...contact, mentions: count };
+      });
+
+      setContactsCustomer(contactsMap);
+    },
+    [contactsData],
+  );
+
+  const handleSetCustomerChat = useCallback(
+    (channel) => {
+      const currentCannelChat = chatData.filter((chat) => {
+        if (
+          chat.customer === selectedCustomer?.id &&
+          chat.channel === channel
+        ) {
+          return true;
+        }
+      });
+
+      setCustomerChat(() => currentCannelChat);
+    },
+    [selectedCustomer, chatData],
+  );
+
+  const handleSelectChannel = useCallback(
+    (channel) => {
+      if (channel === selectedChannel) {
+        return;
+      }
+      setSelectedChannel(channel);
+      handleSetCustomerChat(channel);
+    },
+    [selectedChannel, handleSetCustomerChat],
+  );
 
   const handleSelectCustomer = useCallback(
     (customer) => {
@@ -212,16 +274,16 @@ const Dashboard: React.FC = () => {
 
       const customerChatFilter = chatData.filter((chat) => {
         return chat.customer === customer.id;
-      })[0];
+      });
 
       setSelectedCustomer(() => customer);
+      setCustomerChat(() => []);
 
       if (customerChatFilter) {
-        setChatDataCustomer(() => customerChatFilter);
-        console.log(customerChatFilter);
+        handleSetCustomerChannels(customerChatFilter);
       }
     },
-    [chatData, selectedCustomer],
+    [chatData, handleSetCustomerChannels, selectedCustomer],
   );
 
   return (
@@ -302,20 +364,35 @@ const Dashboard: React.FC = () => {
           </ContentMessagesHeader>
 
           <ContentMessages ref={messageRef}>
-            <ContentStartAttendance>
-              <p>
-                Atendimento iniciado em <strong>{chatDataCustomer}</strong>
-              </p>
-              <span />
-            </ContentStartAttendance>
+            {!!customerChat.length && (
+              <ContentStartAttendance>
+                <p>
+                  Atendimento iniciado em{' '}
+                  <strong>{customerChat[0]?.startFormatted}</strong>
+                </p>
+                <span />
+              </ContentStartAttendance>
+            )}
 
-            <ChannelMessage typeMessage="income" seen />
-            <ChannelMessage typeMessage="outcome" />
-            <ChannelMessage typeMessage="income" seen />
-            <ChannelMessage typeMessage="outcome" />
-            <ChannelMessage typeMessage="income" />
-            <ChannelMessage typeMessage="outcome" />
-            <ChannelMessage typeMessage="outcome" />
+            {customerChat[0]?.messagesFormatted.map((msgChat) => (
+              <ChannelMessage
+                key={msgChat.timestamp}
+                typeMessage={msgChat.type}
+                seen={msgChat.seen}
+                content={msgChat.body}
+                name={
+                  msgChat.type === 'incoming'
+                    ? selectedCustomer?.name
+                    : user?.name
+                }
+                imgAvatar={
+                  msgChat.type === 'incoming'
+                    ? selectedCustomer?.photo
+                    : user?.photo
+                }
+                date={msgChat.timestampFormatted}
+              />
+            ))}
           </ContentMessages>
 
           <InputWrapper>
@@ -342,11 +419,77 @@ const Dashboard: React.FC = () => {
         </ContentMessagesData>
 
         <ContentCustomerInfo>
-          <div>
-            <h2>
-              <span>Featured producfewfwefwefwets</span>
-            </h2>
-          </div>
+          <CustomerInfoData>
+            {/* <img src={selectedCustomer?.photo} alt={selectedCustomer?.name} /> */}
+            <img
+              src="https://ui-avatars.com/api/?name=Joao+Silva"
+              alt="João da Silva"
+            />
+            <CustomerInfo>
+              <strong>João da Silva</strong>
+              <span>ACME INC</span>
+              {/* <strong>{selectedCustomer?.name}</strong>
+              <span>{selectedCustomer?.company}</span> */}
+            </CustomerInfo>
+          </CustomerInfoData>
+          <ButtonsWrapper>
+            <button type="button" className="btn-edit">
+              <FaPencilAlt />
+            </button>
+            <button type="button" className="btn-delete">
+              <FaTrashAlt />
+            </button>
+          </ButtonsWrapper>
+
+          <ContentLastAttendance>
+            <HeaderLastAttendance>ÚLTIMAS CONVERSAS</HeaderLastAttendance>
+            <LastAttendance>
+              <IconAttendance className="whatsapp" />
+              <span>25/09/2019 (10 dias atrás)</span>
+            </LastAttendance>
+            <LastAttendance>
+              <IconAttendance className="whatsapp" />
+              <span>25/09/2019 (10 dias atrás)</span>
+            </LastAttendance>
+            <LastAttendance>
+              <IconAttendance className="skype" />
+              <span>25/09/2019 (10 dias atrás)</span>
+            </LastAttendance>
+          </ContentLastAttendance>
+
+          <ContentObservation>
+            <Headerobservation>OBSERVAÇÕES:</Headerobservation>
+
+            <span>
+              Lorem ipsum dolor sit amet, consectetur adipiscing elit. Orci,
+              lacus, et potenti nisl viverra a, feugiat. Eget ultrices elit
+              faucibus arcu volutpat vulputate.
+            </span>
+          </ContentObservation>
+
+          <ContentCustomerContacts>
+            <ContactInfo>
+              <IconCustomerContacts className="whatsapp" />
+              <ContentRowContacts>
+                <strong>WHATSApp</strong>
+                <span>remulo.costa@gmail.com</span>
+              </ContentRowContacts>
+            </ContactInfo>
+            <ContactInfo>
+              <IconCustomerContacts className="email" />
+              <ContentRowContacts>
+                <strong>WHATSApp</strong>
+                <span>remulo.costa@gmail.com</span>
+              </ContentRowContacts>
+            </ContactInfo>
+            <ContactInfo>
+              <IconCustomerContacts className="skype" />
+              <ContentRowContacts>
+                <strong>WHATSApp</strong>
+                <span>remulo.costa@gmail.com</span>
+              </ContentRowContacts>
+            </ContactInfo>
+          </ContentCustomerContacts>
         </ContentCustomerInfo>
       </ContentAttendance>
     </Container>
