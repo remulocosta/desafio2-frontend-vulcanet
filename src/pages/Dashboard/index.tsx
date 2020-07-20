@@ -9,6 +9,7 @@ import {
 
 import { format, fromUnixTime } from 'date-fns';
 
+// import SidebarBackgroundImg from '../../assets/union.png';
 import ChannelMessage from '../../components/ChannelMessage';
 import ChannelsContact from '../../components/ChannelsContact';
 import Customer from '../../components/Customer';

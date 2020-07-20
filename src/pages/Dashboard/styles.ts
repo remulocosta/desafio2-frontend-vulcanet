@@ -3,7 +3,7 @@ import styled from 'styled-components';
 import Email from '../../assets/email.png';
 import Skype from '../../assets/skype.png';
 import Telefone from '../../assets/telefone.png';
-import sidebarBackgroundImg from '../../assets/union.png';
+import SidebarBackgroundImg from '../../assets/union.png';
 import Webchat from '../../assets/webchat.png';
 import Whatsapp from '../../assets/whatsapp.png';
 
@@ -18,7 +18,7 @@ export const ContentSidebar = styled.div`
   height: 100%;
   /* padding: 10px 15px 0 15px; */
   padding-top: 10px;
-  background: url(${sidebarBackgroundImg}) no-repeat;
+  background: url(${SidebarBackgroundImg}) no-repeat;
   /* background-position-y: calc(100% - 100px); */
   background-position-y: 668px;
   background-size: 120%;
