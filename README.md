@@ -11,58 +11,105 @@ Por isso, o peçaZap ajuda na agilização do atendimento ao cliente, fazendo co
 
   <img alt="Repository size" src="https://img.shields.io/github/repo-size/remulocosta/desafio2-frontend-vulcanet">
 
-  <a href="https://github.com/remulocosta/desafio1-frontend-vulcanet/commits/master">
+  <a href="https://github.com/remulocosta/desafio2-frontend-vulcanet/commits/master">
     <img alt="GitHub last commit" src="https://img.shields.io/github/last-commit/remulocosta/desafio2-frontend-vulcanet">
   </a>
 
-  <a href="https://github.com/remulocosta/desafio1-frontend-vulcanet/issues">
+  <a href="https://github.com/remulocosta/desafio2-frontend-vulcanet/issues">
     <img alt="Repository issues" src="https://img.shields.io/github/issues/remulocosta/desafio2-frontend-vulcanet">
   </a>
 </p>
 
+<p align="center">
+  <img alt="VulcaNet peçaZap" title="VulcaNet peçaZap" src=".github/login.png"/><br />
+</p>
+<p align="center">
+  <img alt="VulcaNet peçaZap" title="VulcaNet peçaZap" src=".github/caixa_email.png"/><br />
+</p>
+<p align="center">
+  <img alt="VulcaNet peçaZap" title="VulcaNet peçaZap" src=".github/chat.png"/><br />
+</p>
+
+## Para acessar a aplicação, Login:
+'Preview da aplicação feito deploy no [netlify](https://desafio2vulcanet-remulo.netlify.app/) "https://desafio2vulcanet-remulo.netlify.app/"
+
+- usuário:  carloscorrea
+- password: carloscorrea
 
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
 
-## Available Scripts
+Este projeto foi iniciado com o [Create React App](https://github.com/facebook/create-react-app).
 
-In the project directory, you can run:
+## :rocket: Technologies
+- [NodeJS](https://nodejs.org)
+- [ReactJS](https://reactjs.org/)
+- [Axios](https://github.com/axios/axios)
+- [VS Code][vc] com [EditorConfig][vceditconfig] e [ESLint][vceslint]
 
-### `yarn start`
+## :information_source: Como usar
+Para clonar e executar este aplicativo, você precisará do Git , Node.js v12.x.x ou superior + Yarn v1.22.4 ou superior instalado no seu computador.<br />
 
-Runs the app in the development mode.<br />
-Open [http://localhost:3000](http://localhost:3000) to view it in the browser.
+```bash
+# Clone este repositório
+$ git clone https://github.com/remulocosta/desafio2-frontend-vulcanet.git front-end
 
-The page will reload if you make edits.<br />
-You will also see any lint errors in the console.
+# Vá para o repositório
+$ cd front-end
 
-### `yarn test`
+# Instalar dependências
+yarn install
+```
 
-Launches the test runner in the interactive watch mode.<br />
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+### Todos os dados mostrados na tela devem ser obtidos via API que disponibiliza os seguintes endpoints
+
+altere o nome do arquivo [.env.example](https://github.com/remulocosta/desafio2-frontend-vulcanet/blob/master/.env.example) na raiz do projeto para .env depois modifique
+a váriavel de ambinete REACT_APP_API_URL para a url do servidor se necessário.
+
+○	[/plans](https://my-json-server.typicode.com/matheuscampanhaf/api-challenge/plans)<br />
+○	[/attendant](https://my-json-server.typicode.com/matheuscampanhaf/api-challenge/attendant)
+
+caso os endpoints não estejam mais disponíveis, defina o valor REACT_APP_API_URL para http://localhost:3333
+e execute o servidor fake com [json-server](https://github.com/typicode/json-server)
+
+### Na sua linha de comando:
+
+```bash
+## abra uma nova linha de comando  na raiz do projeto e execute
+$ yarn json-server vulcanet-db.json --host localhost  -p 3333
+
+## o servidor fake será finalizado caso feche a linha de comando.
+```
+
+
+### Para executar a aplicação:
+```bash
+# No diretório do projeto, você pode executar:
+$ yarn start
+```
+
+Executa o aplicativo no modo de desenvolvimento.<br />
+Abra [http://localhost:3000](http://localhost:3000) para visualizá-lo no navegador.
+
+A página será recarregada se você fizer edições.<br />
+Você também verá lint dos errors no console.
+
 
 ### `yarn build`
 
-Builds the app for production to the `build` folder.<br />
-It correctly bundles React in production mode and optimizes the build for the best performance.
+Cria o aplicativo para produção na pasta `build`.<br />
+Ele agrupa corretamente o React no modo de produção e otimiza a construção para o melhor desempenho.
 
-The build is minified and the filenames include the hashes.<br />
-Your app is ready to be deployed!
+A compilação é minificada e os nomes de arquivos incluem os hashes.<br />
+Seu aplicativo está pronto para ser implantado!
 
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
+Consulte a seção sobre [deployment](https://facebook.github.io/create-react-app/docs/deployment) para obter mais informações.
 
-### `yarn eject`
+## Saber mais
 
-**Note: this is a one-way operation. Once you `eject`, you can’t go back!**
+Você pode aprender mais na documentação do [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
 
-If you aren’t satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
+Para aprender o React, consulte a [React documentation](https://reactjs.org/).
 
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you’re on your own.
+---
 
-You don’t have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn’t feel obligated to use this feature. However we understand that this tool wouldn’t be useful if you couldn’t customize it when you are ready for it.
-
-## Learn More
-
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
-
-To learn React, check out the [React documentation](https://reactjs.org/).
+Feito com ♥ por Remulo Costa 👋 Entrar em [contato](https://www.linkedin.com/in/remulocosta/)!
