@@ -65,8 +65,10 @@ yarn install
 altere o nome do arquivo [.env.example](https://github.com/remulocosta/desafio2-frontend-vulcanet/blob/master/.env.example) na raiz do projeto para .env depois modifique
 a váriavel de ambinete REACT_APP_API_URL para a url do servidor se necessário.
 
-○	[/plans](https://my-json-server.typicode.com/matheuscampanhaf/api-challenge/plans)<br />
-○	[/attendant](https://my-json-server.typicode.com/matheuscampanhaf/api-challenge/attendant)
+○	[/customers](https://my-json-server.typicode.com/matheuscampanhaf/api-challenge/customers)<br />
+○	[/customers](https://my-json-server.typicode.com/matheuscampanhaf/api-challenge/contacts)<br />
+○	[/chats](https://my-json-server.typicode.com/matheuscampanhaf/api-challenge/chats)<br />
+○	[/user](https://my-json-server.typicode.com/matheuscampanhaf/api-challenge/user)
 
 caso os endpoints não estejam mais disponíveis, defina o valor REACT_APP_API_URL para http://localhost:3333
 e execute o servidor fake com [json-server](https://github.com/typicode/json-server)
