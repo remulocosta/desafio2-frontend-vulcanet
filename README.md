@@ -60,10 +60,10 @@ $ cd front-end
 yarn install
 ```
 
-### Todos os dados mostrados na tela devem ser obtidos via API que disponibiliza os seguintes endpoints
+### Todos os dados mostrados na aplicação são obtidos via API que disponibiliza os seguintes endpoints
 
 altere o nome do arquivo [.env.example](https://github.com/remulocosta/desafio2-frontend-vulcanet/blob/master/.env.example) na raiz do projeto para .env depois modifique
-a váriavel de ambinete REACT_APP_API_URL para a url do servidor se necessário.
+a váriavel de ambinete REACT_APP_API_URL para a url do servidor, se necessário.
 
 ○	[/customers](https://my-json-server.typicode.com/matheuscampanhaf/api-challenge/customers)<br />
 ○	[/customers](https://my-json-server.typicode.com/matheuscampanhaf/api-challenge/contacts)<br />
