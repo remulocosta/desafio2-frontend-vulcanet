@@ -1,75 +1,75 @@
 {
     "customers": [
-        {
-            "id": 1,
-            "name": "João da Silva",
-            "photo": "https://ui-avatars.com/api/?name=Joao+Silva",
-            "company": "ACME INC",
-            "lastConversations": [
-                {
-                    "channel": 1,
-                    "finishedAt": 1591627269
-                },
-                {
-                    "channel": 1,
-                    "finishedAt": 1591628768
-                },
-                {
-                    "channel": 4,
-                    "finishedAt": 1591651568
-                }
-            ],
-            "observations": "Mussum Ipsum, cacilds vidis litro abertis. Casamentiss faiz malandris se pirulitá. Quem num gosta di mim que vai caçá sua turmis! Paisis, filhis, espiritis santis. Quem manda na minha terra sou euzis!",
-            "contacts": [
-                {
-                    "channel": 1,
-                    "value": "55 (19) 1234-5678"
-                },
-                {
-                    "channel": 2,
-                    "value": "joao@silva.com.br"
-                },
-                {
-                    "channel": 4,
-                    "value": "@joao_silva"
-                }
-            ]
-        },
-        {
-            "id": 2,
-            "name": "Maria da Silva",
-            "photo": "https://ui-avatars.com/api/?name=Maria+Silva",
-            "company": "VulcaNet",
-            "lastConversations": [
-                {
-                    "type": 2,
-                    "finishedAt": 1591627279
-                },
-                {
-                    "type": 1,
-                    "finishedAt": 1591628728
-                },
-                {
-                    "type": 4,
-                    "finishedAt": 1591651518
-                }
-            ],
-            "observations": "Mussum Ipsum, cacilds vidis litro abertis. Si num tem leite então bota uma pinga aí cumpadi! In elementis mé pra quem é amistosis quis leo. Nullam volutpat risus nec leo commodo, ut interdum diam laoreet. Sed non consequat odio. Sapien in monti palavris qui num significa nadis i pareci latim.",
-            "contacts": [
-                {
-                    "type": 1,
-                    "value": "55 (19) 1234-5678"
-                },
-                {
-                    "type": 2,
-                    "value": "maria@silva.com.br"
-                },
-                {
-                    "type": 4,
-                    "value": "@maria_silva"
-                }
-            ]
-        }
+      {
+        "id": 1,
+        "name": "João da Silva",
+        "photo": "https://ui-avatars.com/api/?name=Joao+Silva",
+        "company": "ACME INC",
+        "lastConversations": [
+          {
+            "channel": 1,
+            "finishedAt": 1591627269
+          },
+          {
+            "channel": 1,
+            "finishedAt": 1591628768
+          },
+          {
+            "channel": 4,
+            "finishedAt": 1591651568
+          }
+        ],
+        "observations": "Mussum Ipsum, cacilds vidis litro abertis. Casamentiss faiz malandris se pirulitá. Quem num gosta di mim que vai caçá sua turmis! Paisis, filhis, espiritis santis. Quem manda na minha terra sou euzis!",
+        "contacts": [
+          {
+            "channel": 1,
+            "value": "55 (19) 1234-5678"
+          },
+          {
+            "channel": 2,
+            "value": "joao@silva.com.br"
+          },
+          {
+            "channel": 4,
+            "value": "@joao_silva"
+          }
+        ]
+      },
+      {
+        "id": 2,
+        "name": "Maria da Silva",
+        "photo": "https://ui-avatars.com/api/?name=Maria+Silva",
+        "company": "VulcaNet",
+        "lastConversations": [
+          {
+            "channel": 2,
+            "finishedAt": 1591627279
+          },
+          {
+            "channel": 1,
+            "finishedAt": 1591628728
+          },
+          {
+            "channel": 4,
+            "finishedAt": 1591651518
+          }
+        ],
+        "observations": "Mussum Ipsum, cacilds vidis litro abertis. Si num tem leite então bota uma pinga aí cumpadi! In elementis mé pra quem é amistosis quis leo. Nullam volutpat risus nec leo commodo, ut interdum diam laoreet. Sed non consequat odio. Sapien in monti palavris qui num significa nadis i pareci latim.",
+        "contacts": [
+          {
+            "channel": 1,
+            "value": "55 (19) 1234-5678"
+          },
+          {
+            "channel": 2,
+            "value": "maria@silva.com.br"
+          },
+          {
+            "channel": 4,
+            "value": "@maria_silva"
+          }
+        ]
+      }
     ],
     "contacts": [
         {

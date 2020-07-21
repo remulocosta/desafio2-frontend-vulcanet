@@ -10,8 +10,7 @@ export const Container = styled.div`
   background: var(--white);
   box-shadow: 2px 0px 2px rgba(0, 0, 0, 0.02);
 `;
-
-export const ContentMessagesHeader = styled.div`
+export const ContentEmailHeader = styled.div`
   display: flex;
   align-items: center;
   justify-content: space-between;
@@ -22,15 +21,24 @@ export const ContentMessagesHeader = styled.div`
   background: var(--white);
   box-shadow: 2px 0px 2px rgba(0, 0, 0, 0.02);
 
+  strong {
+    margin-left: 20px;
+  }
+
+  div {
+    display: flex;
+    align-items: center;
+  }
+
   button {
     display: flex;
     align-items: center;
     justify-content: center;
 
-    width: 234px;
+    width: 173px;
     height: 38px;
 
-    margin-right: 20px;
+    margin: 0 20px;
 
     font-weight: bold;
     font-size: 15px;
@@ -53,7 +61,7 @@ export const ContentMessagesHeader = styled.div`
   }
 `;
 
-export const SearchMessage = styled.div`
+export const SearchEmail = styled.div`
   display: flex;
   align-items: center;
 

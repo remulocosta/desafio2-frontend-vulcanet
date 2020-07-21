@@ -7,12 +7,13 @@ import {
   FaPencilAlt,
 } from 'react-icons/fa';
 
-import { format, fromUnixTime } from 'date-fns';
+import { format, fromUnixTime, differenceInDays } from 'date-fns';
 
 import ChannelMessage from '../../components/ChannelMessage';
 import ChannelsContact from '../../components/ChannelsContact';
 import Customer from '../../components/Customer';
 import { Pic, Copy, Mic, Plane } from '../../components/IconsSVG';
+import SearchBarEmail from '../../components/SearchBarEmail';
 import SearchBarMessage from '../../components/SearchBarMessage';
 import SidebarChannel from '../../components/SidebarChannels';
 import { useAuth } from '../../hooks/auth';
@@ -29,7 +30,6 @@ import {
   Customers,
   ContentMessages,
   ContentMessagesData,
-  ContentMessagesHeader,
   InputWrapper,
   ContentButtonsSendMessage,
   ContentCustomerInfo,
@@ -42,19 +42,18 @@ import {
   IconAttendance,
   LastAttendance,
   ContentObservation,
-  Headerobservation,
+  HeaderObservation,
   ContentCustomerContacts,
   IconCustomerContacts,
   ContentRowContacts,
   ContactInfo,
 } from './styles';
 
-interface IUser {
-  name: string;
-  user: string;
-  password: string;
-  company: string;
-  photo: string;
+interface ILastConversations {
+  daysago: number;
+  channel: number;
+  finishedAt: number;
+  finishedAtFormatted: string;
 }
 
 interface ICustomer {
@@ -62,13 +61,8 @@ interface ICustomer {
   name: string;
   photo: string;
   company: string;
-  lastConversations: [
-    {
-      channel: number;
-      finishedAt: number;
-      finishedAtFormatted: string;
-    },
-  ];
+  lastConversations: ILastConversations[];
+  lastConversationsFormatted: ILastConversations[];
   observations: string;
   contacts: [
     {
@@ -106,11 +100,9 @@ interface IChat {
 
 const Dashboard: React.FC = () => {
   const { signOut, user } = useAuth();
-  // const [userData, setUserData] = useState<IUser>(); // usuário retornado da api
-  const [contactsData, setContactsData] = useState<IContact[]>([]); // contacts
-  const [chatData, setChatData] = useState<IChat[]>([]); // chat data
-  const [customers, setCustomers] = useState<ICustomer[]>([]); // Lista de clientes retornado da api
-
+  const [contactsData, setContactsData] = useState<IContact[]>([]);
+  const [chatData, setChatData] = useState<IChat[]>([]);
+  const [customers, setCustomers] = useState<ICustomer[]>([]);
   const [contactsCustomer, setContactsCustomer] = useState<IContact[]>([]);
   const [customerChat, setCustomerChat] = useState<IChat[]>([]);
 
@@ -193,7 +185,27 @@ const Dashboard: React.FC = () => {
                 );
               });
 
-            return { ...customer, mentions: messagesResult.length };
+            const lastConversationsFormatted = customer.lastConversations.map(
+              (last) => {
+                return {
+                  ...last,
+                  finishedAtFormatted: format(
+                    fromUnixTime(last.finishedAt),
+                    'dd/MM/yyyy',
+                  ),
+                  daysago: differenceInDays(
+                    new Date(),
+                    fromUnixTime(last.finishedAt),
+                  ),
+                };
+              },
+            );
+
+            return {
+              ...customer,
+              mentions: messagesResult.length,
+              lastConversationsFormatted,
+            };
           });
 
           setCustomers(mapCustomer);
@@ -246,7 +258,8 @@ const Dashboard: React.FC = () => {
         return false;
       });
 
-      setCustomerChat(() => currentCannelChat);
+      console.log(currentCannelChat);
+      setCustomerChat(currentCannelChat);
     },
     [selectedCustomer, chatData],
   );
@@ -272,8 +285,9 @@ const Dashboard: React.FC = () => {
         return chat.customer === customer.id;
       });
 
-      setSelectedCustomer(() => customer);
-      setCustomerChat(() => []);
+      setCustomerChat([]);
+
+      setSelectedCustomer(customer);
 
       if (customerChatFilter) {
         handleSetCustomerChannels(customerChatFilter);
@@ -285,6 +299,8 @@ const Dashboard: React.FC = () => {
   return (
     <Container>
       <ContentSidebar>
+        {/* content user info */}
+
         <ContentUser>
           <img src={user?.photo} alt={user?.name} />
           <UserInfo>
@@ -300,6 +316,8 @@ const Dashboard: React.FC = () => {
           <input name="search" />
           <FaSearch />
         </ContentSearch>
+
+        {/* sidebar customers */}
 
         <ContentCustomers>
           <ContentCustomersHeader>
@@ -325,6 +343,8 @@ const Dashboard: React.FC = () => {
         </ContentCustomers>
       </ContentSidebar>
 
+      {/* sidebar contacts */}
+
       <ContentAttendance>
         <SidebarChannel>
           {selectedCustomer && selectedCustomer ? (
@@ -346,7 +366,6 @@ const Dashboard: React.FC = () => {
                   key={channel}
                   typeBtn={type}
                   selected={selectedChannel === channel}
-                  // mentions={Math.floor(Math.random() * 1101)}
                   onClick={() => handleSelectChannel(channel)}
                 />
               ))}
@@ -355,136 +374,202 @@ const Dashboard: React.FC = () => {
         </SidebarChannel>
 
         <ContentMessagesData>
-          <ContentMessagesHeader>
-            <SearchBarMessage />
-          </ContentMessagesHeader>
+          {/* content chat  whatsapp */}
+          {selectedChannel === 1 && (
+            <>
+              {/* content header chat */}
+              <SearchBarMessage />
 
-          <ContentMessages ref={messageRef}>
-            {!!customerChat.length && (
-              <ContentStartAttendance>
-                <p>
-                  Atendimento iniciado em{' '}
-                  <strong>{customerChat[0]?.startFormatted}</strong>
-                </p>
-                <span />
-              </ContentStartAttendance>
-            )}
+              <ContentMessages ref={messageRef}>
+                {!!customerChat.length && (
+                  <ContentStartAttendance>
+                    <p>
+                      Atendimento iniciado em{' '}
+                      <strong>{customerChat[0]?.startFormatted}</strong>
+                    </p>
+                    <span />
+                  </ContentStartAttendance>
+                )}
 
-            {customerChat[0]?.messagesFormatted.map((msgChat) => (
-              <ChannelMessage
-                key={msgChat.timestamp}
-                typeMessage={msgChat.type}
-                seen={msgChat.seen}
-                content={msgChat.body}
-                name={
-                  msgChat.type === 'incoming'
-                    ? selectedCustomer?.name
-                    : user?.name
-                }
-                imgAvatar={
-                  msgChat.type === 'incoming'
-                    ? selectedCustomer?.photo
-                    : user?.photo
-                }
-                date={msgChat.timestampFormatted}
-              />
-            ))}
-          </ContentMessages>
+                {customerChat[0]?.messagesFormatted.map((msgChat) => (
+                  <ChannelMessage
+                    key={msgChat.timestamp}
+                    typeMessage={msgChat.type}
+                    seen={msgChat.seen}
+                    content={msgChat.body}
+                    name={
+                      msgChat.type === 'incoming'
+                        ? selectedCustomer?.name
+                        : user?.name
+                    }
+                    imgAvatar={
+                      msgChat.type === 'incoming'
+                        ? selectedCustomer?.photo
+                        : user?.photo
+                    }
+                    date={msgChat.timestampFormatted}
+                  />
+                ))}
+              </ContentMessages>
 
-          <InputWrapper>
-            <input
-              type="text"
-              placeholder="Digite sua mensagem..."
-              name="send-message"
-            />
-            <ContentButtonsSendMessage>
-              <button type="button">
-                <Pic />
-              </button>
-              <button type="button">
-                <Copy />
-              </button>
-              <button type="button">
-                <Mic />
-              </button>
-              <button type="button">
-                <Plane />
-              </button>
-            </ContentButtonsSendMessage>
-          </InputWrapper>
+              {/* Footer send message */}
+
+              <InputWrapper>
+                <input
+                  type="text"
+                  placeholder="Digite sua mensagem..."
+                  name="send-message"
+                />
+                <ContentButtonsSendMessage>
+                  <button type="button">
+                    <Pic />
+                  </button>
+                  <button type="button">
+                    <Copy />
+                  </button>
+                  <button type="button">
+                    <Mic />
+                  </button>
+                  <button type="button">
+                    <Plane />
+                  </button>
+                </ContentButtonsSendMessage>
+              </InputWrapper>
+            </>
+          )}
+
+          {/* content chat  email */}
+          {selectedChannel === 2 && (
+            <>
+              {/* content header chat */}
+              <SearchBarEmail />
+
+              <ContentMessages ref={messageRef}>
+                {!!customerChat.length && (
+                  <ContentStartAttendance>
+                    <p>
+                      Atendimento iniciado em{' '}
+                      <strong>{customerChat[0]?.startFormatted}</strong>
+                    </p>
+                    <span />
+                  </ContentStartAttendance>
+                )}
+
+                {customerChat[0]?.messagesFormatted.map((msgChat) => (
+                  <ChannelMessage
+                    key={msgChat.timestamp}
+                    typeMessage={msgChat.type}
+                    seen={msgChat.seen}
+                    content={msgChat.body}
+                    name={
+                      msgChat.type === 'incoming'
+                        ? selectedCustomer?.name
+                        : user?.name
+                    }
+                    imgAvatar={
+                      msgChat.type === 'incoming'
+                        ? selectedCustomer?.photo
+                        : user?.photo
+                    }
+                    date={msgChat.timestampFormatted}
+                  />
+                ))}
+              </ContentMessages>
+
+              {/* Footer send message */}
+
+              <InputWrapper>
+                <input
+                  type="text"
+                  placeholder="Digite sua mensagem..."
+                  name="send-message"
+                />
+                <ContentButtonsSendMessage>
+                  <button type="button">
+                    <Pic />
+                  </button>
+                  <button type="button">
+                    <Copy />
+                  </button>
+                  <button type="button">
+                    <Mic />
+                  </button>
+                  <button type="button">
+                    <Plane />
+                  </button>
+                </ContentButtonsSendMessage>
+              </InputWrapper>
+            </>
+          )}
         </ContentMessagesData>
 
-        <ContentCustomerInfo>
-          <CustomerInfoData>
-            {/* <img src={selectedCustomer?.photo} alt={selectedCustomer?.name} /> */}
-            <img
-              src="https://ui-avatars.com/api/?name=Joao+Silva"
-              alt="João da Silva"
-            />
-            <CustomerInfo>
-              <strong>João da Silva</strong>
-              <span>ACME INC</span>
-              {/* <strong>{selectedCustomer?.name}</strong>
-              <span>{selectedCustomer?.company}</span> */}
-            </CustomerInfo>
-          </CustomerInfoData>
-          <ButtonsWrapper>
-            <button type="button" className="btn-edit">
-              <FaPencilAlt />
-            </button>
-            <button type="button" className="btn-delete">
-              <FaTrashAlt />
-            </button>
-          </ButtonsWrapper>
+        {/* Sidebar Info Customer */}
 
+        <ContentCustomerInfo>
+          {selectedCustomer && (
+            <>
+              <CustomerInfoData>
+                <img
+                  src={selectedCustomer?.photo}
+                  alt={selectedCustomer?.name}
+                />
+                <CustomerInfo>
+                  <strong>{selectedCustomer?.name}</strong>
+                  <span>{selectedCustomer?.company}</span>
+                </CustomerInfo>
+              </CustomerInfoData>
+              <ButtonsWrapper>
+                <button type="button" className="btn-edit">
+                  <FaPencilAlt />
+                </button>
+                <button type="button" className="btn-delete">
+                  <FaTrashAlt />
+                </button>
+              </ButtonsWrapper>
+            </>
+          )}
           <ContentLastAttendance>
-            <HeaderLastAttendance>ÚLTIMAS CONVERSAS</HeaderLastAttendance>
-            <LastAttendance>
-              <IconAttendance className="whatsapp" />
-              <span>25/09/2019 (10 dias atrás)</span>
-            </LastAttendance>
-            <LastAttendance>
-              <IconAttendance className="whatsapp" />
-              <span>25/09/2019 (10 dias atrás)</span>
-            </LastAttendance>
-            <LastAttendance>
-              <IconAttendance className="skype" />
-              <span>25/09/2019 (10 dias atrás)</span>
-            </LastAttendance>
+            {selectedCustomer?.lastConversationsFormatted && (
+              <>
+                <HeaderLastAttendance>ÚLTIMAS CONVERSAS</HeaderLastAttendance>
+                {selectedCustomer?.lastConversationsFormatted.map((last) => (
+                  <LastAttendance key={last.finishedAt}>
+                    <IconAttendance
+                      className={contactsCustomer[last.channel - 1]?.type}
+                    />
+                    <span>
+                      {last.finishedAtFormatted}{' '}
+                      {`(${last.daysago} dias atrás)`}
+                    </span>
+                  </LastAttendance>
+                ))}
+              </>
+            )}
           </ContentLastAttendance>
 
           <ContentObservation>
-            <Headerobservation>OBSERVAÇÕES:</Headerobservation>
-
-            <span>
-              Lorem ipsum dolor sit amet, consectetur adipiscing elit. Orci,
-              lacus, et potenti nisl viverra a, feugiat. Eget ultrices elit
-              faucibus arcu volutpat vulputate.
-            </span>
+            {selectedCustomer?.observations && (
+              <>
+                <HeaderObservation>OBSERVAÇÕES:</HeaderObservation>
+                <span>{selectedCustomer?.observations}</span>
+              </>
+            )}
           </ContentObservation>
-
           <ContentCustomerContacts>
-            <ContactInfo>
-              <IconCustomerContacts className="whatsapp" />
-              <ContentRowContacts>
-                <strong>WHATSApp</strong>
-                <span>remulo.costa@gmail.com</span>
-              </ContentRowContacts>
-            </ContactInfo>
-            <ContactInfo>
-              <IconCustomerContacts className="email" />
-              <ContentRowContacts>
-                <strong>WHATSApp</strong>
-                <span>remulo.costa@gmail.com</span>
-              </ContentRowContacts>
-            </ContactInfo>
-            <ContactInfo>
-              <IconCustomerContacts className="skype" />
-              <ContentRowContacts>
-                <strong>WHATSApp</strong>
-                <span>remulo.costa@gmail.com</span>
-              </ContentRowContacts>
-            </ContactInfo>
+            {selectedCustomer?.contacts &&
+              selectedCustomer?.contacts.map((contact) => (
+                <ContactInfo key={contact.value}>
+                  <IconCustomerContacts
+                    className={contactsCustomer[contact.channel - 1]?.type}
+                  />
+                  <ContentRowContacts>
+                    <strong>
+                      {contactsCustomer[contact.channel - 1]?.type}
+                    </strong>
+                    <span>{contact.value}</span>
+                  </ContentRowContacts>
+                </ContactInfo>
+              ))}
           </ContentCustomerContacts>
         </ContentCustomerInfo>
       </ContentAttendance>

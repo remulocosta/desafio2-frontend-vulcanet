@@ -310,7 +310,9 @@ export const CustomerInfoData = styled.div`
   & img {
     width: 64px;
     height: 64px;
-    border-radius: 100px;
+    border-radius: 50%;
+    background-repeat: no-repeat;
+    display: inline-block;
   }
 `;
 
@@ -331,6 +333,7 @@ export const CustomerInfo = styled.div`
     font-weight: bold;
     font-size: 12px;
     line-height: 18px;
+    text-transform: uppercase;
 
     color: var(--quinary);
   }
@@ -417,7 +420,7 @@ export const ContentObservation = styled.div`
   }
 `;
 
-export const Headerobservation = styled.div`
+export const HeaderObservation = styled.div`
   font-weight: bold;
   font-size: 12px;
   line-height: 22px;
@@ -475,7 +478,6 @@ export const ContentRowContacts = styled.div`
   strong {
     font-weight: bold;
     font-size: 12px;
-    /* line-height: 18px; */
 
     text-transform: uppercase;
 
@@ -484,6 +486,5 @@ export const ContentRowContacts = styled.div`
 
   span {
     font-size: 15px;
-    /* line-height: 18px; */
   }
 `;
