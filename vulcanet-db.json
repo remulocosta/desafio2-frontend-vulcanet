@@ -103,7 +103,6 @@
             "messages": [
                 {
                     "seen": true,
-
                     "timestamp": 1594388082,
                     "body": "Mussum Ipsum, cacilds vidis litro abertis. Mauris nec dolor in eros commodo tempor. Aenean aliquam molestie leo, vitae iaculis nisl. Todo mundo vê os porris que eu tomo, mas ninguém vê os tombis que eu levo! Quem num gosta di mim que vai caçá sua turmis! In elementis mé pra quem é amistosis quis leo.",
                     "type": "incoming"
@@ -117,6 +116,24 @@
                 {
                     "seen": false,
                     "timestamp": 1594388084,
+                    "body": "Mussum Ipsum, cacilds vidis litro abertis. Manduma pindureta quium dia nois paga. Suco de cevadiss, é um leite divinis, qui tem lupuliz, matis, aguis e fermentis. Atirei o pau no gatis, per gatis num morreus. Posuere libero varius. Nullam a nisl ut ante blandit hendrerit. Aenean sit amet nisi.",
+                    "type": "incoming"
+                },
+                {
+                    "seen": true,
+                    "timestamp": 1594388085,
+                    "body": "Mussum Ipsum, cacilds vidis litro abertis. Mauris nec dolor in eros commodo tempor. Aenean aliquam molestie leo, vitae iaculis nisl. Todo mundo vê os porris que eu tomo, mas ninguém vê os tombis que eu levo! Quem num gosta di mim que vai caçá sua turmis! In elementis mé pra quem é amistosis quis leo.",
+                    "type": "incoming"
+                },
+                {
+                    "seen": true,
+                    "timestamp": 1594388086,
+                    "body": "Mussum Ipsum, cacilds vidis litro abertis. Detraxit consequat et quo num tendi nada. Nullam volutpat risus nec leo commodo, ut interdum diam laoreet. Sed non consequat odio. A ordem dos tratores não altera o pão duris. Cevadis im ampola pa arma uma pindureta.",
+                    "type": "outgoing"
+                },
+                {
+                    "seen": false,
+                    "timestamp": 1594388087,
                     "body": "Mussum Ipsum, cacilds vidis litro abertis. Manduma pindureta quium dia nois paga. Suco de cevadiss, é um leite divinis, qui tem lupuliz, matis, aguis e fermentis. Atirei o pau no gatis, per gatis num morreus. Posuere libero varius. Nullam a nisl ut ante blandit hendrerit. Aenean sit amet nisi.",
                     "type": "incoming"
                 }
@@ -140,6 +157,69 @@
         {
             "id": 3,
             "customer": 2,
+            "channel": 2,
+            "subject": "Procedimento de troca",
+            "start": 1594388081,
+            "messages": [
+                {
+                    "seen": true,
+                    "timestamp": 1594388081,
+                    "body": "Mussum Ipsum, cacilds vidis litro abertis. Não sou faixa preta cumpadi, sou preto inteiris, inteiris. Cevadis im ampola pa arma uma pindureta. Suco de cevadiss, é um leite divinis, qui tem lupuliz, matis, aguis e fermentis. Nec orci ornare consequat. Praesent lacinia ultrices consectetur. Sed non ipsum felis.",
+                    "type": "incoming"
+                },
+                {
+                    "seen": true,
+                    "timestamp": 1594388082,
+                    "body": "Mussum Ipsum, cacilds vidis litro abertis. Todo mundo vê os porris que eu tomo, mas ninguém vê os tombis que eu levo! Mais vale um bebadis conhecidiss, que um alcoolatra anonimis. Quem num gosta di mé, boa gentis num é. Praesent malesuada urna nisi, quis volutpat erat hendrerit non. Nam vulputate dapibus.",
+                    "type": "outgoing"
+                }
+            ]
+        },
+        {
+            "id": 4,
+            "customer": 2,
+            "channel": 2,
+            "subject": "Procedimento de troca",
+            "start": 1594388081,
+            "messages": [
+                {
+                    "seen": true,
+                    "timestamp": 1594388081,
+                    "body": "Mussum Ipsum, cacilds vidis litro abertis. Não sou faixa preta cumpadi, sou preto inteiris, inteiris. Cevadis im ampola pa arma uma pindureta. Suco de cevadiss, é um leite divinis, qui tem lupuliz, matis, aguis e fermentis. Nec orci ornare consequat. Praesent lacinia ultrices consectetur. Sed non ipsum felis.",
+                    "type": "incoming"
+                },
+                {
+                    "seen": true,
+                    "timestamp": 1594388082,
+                    "body": "Mussum Ipsum, cacilds vidis litro abertis. Todo mundo vê os porris que eu tomo, mas ninguém vê os tombis que eu levo! Mais vale um bebadis conhecidiss, que um alcoolatra anonimis. Quem num gosta di mé, boa gentis num é. Praesent malesuada urna nisi, quis volutpat erat hendrerit non. Nam vulputate dapibus.",
+                    "type": "outgoing"
+                }
+            ]
+        },
+        {
+            "id": 5,
+            "customer": 2,
+            "channel": 2,
+            "subject": "Procedimento de troca",
+            "start": 1594388081,
+            "messages": [
+                {
+                    "seen": true,
+                    "timestamp": 1594388081,
+                    "body": "Mussum Ipsum, cacilds vidis litro abertis. Não sou faixa preta cumpadi, sou preto inteiris, inteiris. Cevadis im ampola pa arma uma pindureta. Suco de cevadiss, é um leite divinis, qui tem lupuliz, matis, aguis e fermentis. Nec orci ornare consequat. Praesent lacinia ultrices consectetur. Sed non ipsum felis.",
+                    "type": "incoming"
+                },
+                {
+                    "seen": true,
+                    "timestamp": 1594388082,
+                    "body": "Mussum Ipsum, cacilds vidis litro abertis. Todo mundo vê os porris que eu tomo, mas ninguém vê os tombis que eu levo! Mais vale um bebadis conhecidiss, que um alcoolatra anonimis. Quem num gosta di mé, boa gentis num é. Praesent malesuada urna nisi, quis volutpat erat hendrerit non. Nam vulputate dapibus.",
+                    "type": "outgoing"
+                }
+            ]
+        },
+        {
+            "id": 6,
+            "customer": 1,
             "channel": 2,
             "subject": "Procedimento de troca",
             "start": 1594388081,

@@ -166,61 +166,26 @@ export const ContentMessagesData = styled.div`
   flex: 1;
 `;
 
-export const ContentMessagesHeader = styled.div`
+export const ContentEmails = styled.div`
   display: flex;
-  align-items: center;
-  justify-content: space-between;
+  flex: 1;
+  flex-direction: column;
 
-  height: 64px;
+  max-height: calc(100% - 64px - 64px);
+  width: 100%;
+  overflow-y: scroll;
 
-  background: var(--white);
-  box-shadow: 2px 0px 2px rgba(0, 0, 0, 0.02);
-`;
-
-export const InputWrapper = styled.div`
-  display: flex;
-  align-items: center;
-
-  height: 64px;
-
-  margin-bottom: auto;
-
-  background: var(--white);
-  box-shadow: 0px -1px 0px rgba(0, 0, 0, 0.05);
-  border-radius: 0px;
-
-  input {
-    flex: 1;
-    background: transparent;
-    border: 0;
-    color: var(--font-tertiary);
-    margin: 8px 0 8px 30px;
+  ::-webkit-scrollbar {
+    width: 8px;
   }
-`;
 
-export const ContentButtonsSendMessage = styled.div`
-  display: flex;
-  margin: 0 20px;
+  ::-webkit-scrollbar-thumb {
+    background-color: var(--primary);
+    border-radius: 4px;
+  }
 
-  button {
-    width: 38px;
-    height: 38px;
-
-    font-family: FontAwesome;
-    font-style: normal;
-    font-weight: normal;
-    font-size: 20px;
-    line-height: 16px;
-    /* or 80% */
-
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    color: var(--unticked);
-
-    &:hover {
-      color: var(--font-tertiary);
-    }
+  ::-webkit-scrollbar-track {
+    background-color: var(--secondary);
   }
 `;
 

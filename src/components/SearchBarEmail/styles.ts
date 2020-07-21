@@ -10,6 +10,7 @@ export const Container = styled.div`
   background: var(--white);
   box-shadow: 2px 0px 2px rgba(0, 0, 0, 0.02);
 `;
+
 export const ContentEmailHeader = styled.div`
   display: flex;
   align-items: center;
@@ -23,6 +24,12 @@ export const ContentEmailHeader = styled.div`
 
   strong {
     margin-left: 20px;
+
+    font-weight: bold;
+    font-size: 18px;
+    line-height: 16px;
+
+    color: var(--black);
   }
 
   div {

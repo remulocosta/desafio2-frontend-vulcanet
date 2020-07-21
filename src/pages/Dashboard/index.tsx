@@ -12,7 +12,9 @@ import { format, fromUnixTime, differenceInDays } from 'date-fns';
 import ChannelMessage from '../../components/ChannelMessage';
 import ChannelsContact from '../../components/ChannelsContact';
 import Customer from '../../components/Customer';
-import { Pic, Copy, Mic, Plane } from '../../components/IconsSVG';
+import EmailCard from '../../components/EmailCard';
+import FooterChat from '../../components/FooterChat';
+import HeaderListEmails from '../../components/HeaderListEmails';
 import SearchBarEmail from '../../components/SearchBarEmail';
 import SearchBarMessage from '../../components/SearchBarMessage';
 import SidebarChannel from '../../components/SidebarChannels';
@@ -29,9 +31,8 @@ import {
   ContentCustomersHeader,
   Customers,
   ContentMessages,
+  ContentEmails,
   ContentMessagesData,
-  InputWrapper,
-  ContentButtonsSendMessage,
   ContentCustomerInfo,
   ContentStartAttendance,
   CustomerInfo,
@@ -246,19 +247,17 @@ const Dashboard: React.FC = () => {
     [contactsData],
   );
 
+  function handleCountMentions(msg: IChat): number {
+    return msg.messages.filter((email) => email.seen === false).length;
+  }
+
   const handleSetCustomerChat = useCallback(
     (channel) => {
-      const currentCannelChat = chatData.filter((chat) => {
-        if (
-          chat.customer === selectedCustomer?.id &&
-          chat.channel === channel
-        ) {
-          return true;
-        }
-        return false;
-      });
+      const currentCannelChat = chatData.filter(
+        (chat) =>
+          chat.customer === selectedCustomer?.id && chat.channel === channel,
+      );
 
-      console.log(currentCannelChat);
       setCustomerChat(currentCannelChat);
     },
     [selectedCustomer, chatData],
@@ -413,28 +412,7 @@ const Dashboard: React.FC = () => {
               </ContentMessages>
 
               {/* Footer send message */}
-
-              <InputWrapper>
-                <input
-                  type="text"
-                  placeholder="Digite sua mensagem..."
-                  name="send-message"
-                />
-                <ContentButtonsSendMessage>
-                  <button type="button">
-                    <Pic />
-                  </button>
-                  <button type="button">
-                    <Copy />
-                  </button>
-                  <button type="button">
-                    <Mic />
-                  </button>
-                  <button type="button">
-                    <Plane />
-                  </button>
-                </ContentButtonsSendMessage>
-              </InputWrapper>
+              <FooterChat />
             </>
           )}
 
@@ -444,61 +422,19 @@ const Dashboard: React.FC = () => {
               {/* content header chat */}
               <SearchBarEmail />
 
-              <ContentMessages ref={messageRef}>
-                {!!customerChat.length && (
-                  <ContentStartAttendance>
-                    <p>
-                      Atendimento iniciado em{' '}
-                      <strong>{customerChat[0]?.startFormatted}</strong>
-                    </p>
-                    <span />
-                  </ContentStartAttendance>
-                )}
+              <HeaderListEmails />
 
-                {customerChat[0]?.messagesFormatted.map((msgChat) => (
-                  <ChannelMessage
-                    key={msgChat.timestamp}
-                    typeMessage={msgChat.type}
-                    seen={msgChat.seen}
-                    content={msgChat.body}
-                    name={
-                      msgChat.type === 'incoming'
-                        ? selectedCustomer?.name
-                        : user?.name
-                    }
-                    imgAvatar={
-                      msgChat.type === 'incoming'
-                        ? selectedCustomer?.photo
-                        : user?.photo
-                    }
-                    date={msgChat.timestampFormatted}
+              <ContentEmails ref={messageRef}>
+                {customerChat.map((msgEmail) => (
+                  <EmailCard
+                    key={msgEmail.id}
+                    title={msgEmail.subject || ''}
+                    start_date={msgEmail.startFormatted}
+                    timestamp={msgEmail.startFormatted}
+                    mentions={handleCountMentions(msgEmail)}
                   />
                 ))}
-              </ContentMessages>
-
-              {/* Footer send message */}
-
-              <InputWrapper>
-                <input
-                  type="text"
-                  placeholder="Digite sua mensagem..."
-                  name="send-message"
-                />
-                <ContentButtonsSendMessage>
-                  <button type="button">
-                    <Pic />
-                  </button>
-                  <button type="button">
-                    <Copy />
-                  </button>
-                  <button type="button">
-                    <Mic />
-                  </button>
-                  <button type="button">
-                    <Plane />
-                  </button>
-                </ContentButtonsSendMessage>
-              </InputWrapper>
+              </ContentEmails>
             </>
           )}
         </ContentMessagesData>
