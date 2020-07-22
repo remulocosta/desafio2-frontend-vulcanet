@@ -17,7 +17,9 @@ const FooterEmail: React.FC = () => (
   <InputWrapper>
     <textarea placeholder="Digite sua mensagem..." name="send-message" />
     <ContentButtonsSendMessage>
-      <button type="button">RESPONDER</button>
+      <button type="button" className="responder">
+        RESPONDER
+      </button>
       <button type="button">
         <Pic />
       </button>
