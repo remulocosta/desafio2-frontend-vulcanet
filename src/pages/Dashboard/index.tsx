@@ -1,5 +1,12 @@
-import React, { useState, useCallback, useEffect, useRef } from 'react';
+import React, {
+  useState,
+  useCallback,
+  useEffect,
+  useRef,
+  useMemo,
+} from 'react';
 import {
+  FaArrowLeft,
   FaCaretDown,
   FaPlus,
   FaSearch,
@@ -13,8 +20,12 @@ import ChannelMessage from '../../components/ChannelMessage';
 import ChannelsContact from '../../components/ChannelsContact';
 import Customer from '../../components/Customer';
 import EmailCard from '../../components/EmailCard';
+import EmailMessage from '../../components/EmailMessage';
 import FooterChat from '../../components/FooterChat';
+import FooterEmail from '../../components/FooterEmail';
 import HeaderListEmails from '../../components/HeaderListEmails';
+import HeaderReadEmails from '../../components/HeaderReadEmails';
+import ReadMail from '../../components/ReadMail';
 import SearchBarEmail from '../../components/SearchBarEmail';
 import SearchBarMessage from '../../components/SearchBarMessage';
 import SidebarChannel from '../../components/SidebarChannels';
@@ -106,10 +117,12 @@ const Dashboard: React.FC = () => {
   const [customers, setCustomers] = useState<ICustomer[]>([]);
   const [contactsCustomer, setContactsCustomer] = useState<IContact[]>([]);
   const [customerChat, setCustomerChat] = useState<IChat[]>([]);
+  const [customerEmail, setCustomerEmail] = useState<IChat>();
 
   const [selectedCustomer, setSelectedCustomer] = useState<ICustomer>();
   const [selectedChannel, setSelectedChannel] = useState(0);
 
+  const [readEmail, setReadEmail] = useState(false);
   const messageRef = useRef() as React.MutableRefObject<HTMLDivElement>;
 
   useEffect(() => {
@@ -247,9 +260,39 @@ const Dashboard: React.FC = () => {
     [contactsData],
   );
 
-  function handleCountMentions(msg: IChat): number {
-    return msg.messages.filter((email) => email.seen === false).length;
-  }
+  const handleCountMentions = useMemo(
+    () => (msg: IChat): number => {
+      return msg.messages.filter((email) => email.seen === false).length;
+    },
+    [],
+  );
+
+  // function getContactChannelWithID3(channelID: number): IContact | undefined {
+  //   const channel = contactsData.find(
+  //     (channelFinder) => channelFinder.channel === channelID,
+  //   );
+
+  //   return channel;
+  // }
+
+  // const getContactChannelWithID = (channelID: number): IContact | undefined => {
+  //   const channel = contactsData.find(
+  //     (channelFinder) => channelFinder.channel === channelID,
+  //   );
+
+  //   return channel;
+  // };
+
+  const getContactChannelWithID = useMemo(
+    () => (channelID: number): IContact | undefined => {
+      const channel = contactsData.find(
+        (channelFinder) => channelFinder.channel === channelID,
+      );
+
+      return channel;
+    },
+    [contactsData],
+  );
 
   const handleSetCustomerChat = useCallback(
     (channel) => {
@@ -294,6 +337,12 @@ const Dashboard: React.FC = () => {
     },
     [chatData, handleSetCustomerChannels, selectedCustomer],
   );
+
+  const handleReaderEmail = useCallback((email, read) => {
+    console.log('email', email);
+    setCustomerEmail(email);
+    setReadEmail(() => read);
+  }, []);
 
   return (
     <Container>
@@ -417,7 +466,7 @@ const Dashboard: React.FC = () => {
           )}
 
           {/* content chat  email */}
-          {selectedChannel === 2 && (
+          {selectedChannel === 2 && readEmail === false && (
             <>
               {/* content header chat */}
               <SearchBarEmail />
@@ -432,9 +481,45 @@ const Dashboard: React.FC = () => {
                     start_date={msgEmail.startFormatted}
                     timestamp={msgEmail.startFormatted}
                     mentions={handleCountMentions(msgEmail)}
+                    onClick={() => handleReaderEmail(msgEmail, true)}
                   />
                 ))}
               </ContentEmails>
+            </>
+          )}
+
+          {selectedChannel === 2 && readEmail === true && (
+            <>
+              <ReadMail>
+                <HeaderReadEmails subject={customerEmail?.subject || ''}>
+                  <button
+                    type="button"
+                    onClick={() => handleReaderEmail([], false)}
+                  >
+                    <FaArrowLeft size={18} />
+                  </button>
+                </HeaderReadEmails>
+                {customerEmail?.messagesFormatted.map((email) => (
+                  <EmailMessage
+                    key={email.timestamp}
+                    typeMessage={email.type}
+                    seen={email.seen}
+                    content={email.body}
+                    name={
+                      email.type === 'incoming'
+                        ? selectedCustomer?.name
+                        : user?.name
+                    }
+                    imgAvatar={
+                      email.type === 'incoming'
+                        ? selectedCustomer?.photo
+                        : user?.photo
+                    }
+                    date={email.timestampFormatted}
+                  />
+                ))}
+              </ReadMail>
+              <FooterEmail />
             </>
           )}
         </ContentMessagesData>
@@ -471,11 +556,12 @@ const Dashboard: React.FC = () => {
                 {selectedCustomer?.lastConversationsFormatted.map((last) => (
                   <LastAttendance key={last.finishedAt}>
                     <IconAttendance
-                      className={contactsCustomer[last.channel - 1]?.type}
+                      //  className={contactsCustomer[last.channel - 1]?.type}
+                      className={getContactChannelWithID(last.channel)?.type}
                     />
                     <span>
                       {last.finishedAtFormatted}{' '}
-                      {`(${last.daysago} dias atrás)`}
+                      {`(${last.daysago}  ${last.daysago > 1}dias atrás)`}
                     </span>
                   </LastAttendance>
                 ))}
@@ -496,11 +582,11 @@ const Dashboard: React.FC = () => {
               selectedCustomer?.contacts.map((contact) => (
                 <ContactInfo key={contact.value}>
                   <IconCustomerContacts
-                    className={contactsCustomer[contact.channel - 1]?.type}
+                    className={getContactChannelWithID(contact.channel)?.type}
                   />
                   <ContentRowContacts>
                     <strong>
-                      {contactsCustomer[contact.channel - 1]?.type}
+                      {getContactChannelWithID(contact.channel)?.type}
                     </strong>
                     <span>{contact.value}</span>
                   </ContentRowContacts>
