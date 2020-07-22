@@ -18,6 +18,8 @@ export const InputWrapper = styled.div`
     align-items: center;
     justify-content: center;
 
+    font-family: 'Lato';
+
     width: 234px;
     height: 38px;
 
