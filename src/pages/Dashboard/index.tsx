@@ -25,7 +25,6 @@ import FooterChat from '../../components/FooterChat';
 import FooterEmail from '../../components/FooterEmail';
 import HeaderListEmails from '../../components/HeaderListEmails';
 import HeaderReadEmails from '../../components/HeaderReadEmails';
-import ReadMail from '../../components/ReadMail';
 import SearchBarEmail from '../../components/SearchBarEmail';
 import SearchBarMessage from '../../components/SearchBarMessage';
 import SidebarChannel from '../../components/SidebarChannels';
@@ -188,14 +187,18 @@ const Dashboard: React.FC = () => {
         })
         .then((resFormattedChat) => {
           const mapCustomer = resCustomers.map((customer) => {
-            const messagesResult = resFormattedChat
+            let count = 0;
+
+            // const messagesResult = resFormattedChat
+            resFormattedChat
               .filter((msgCustomer) => {
                 return msgCustomer.customer === customer.id;
               })
               .filter((msgSeen) => {
                 return (
                   msgSeen.messages.filter((linha) => {
-                    return linha.seen === false;
+                    count = linha.seen === false ? (count += 1) : count;
+                    return true;
                   }).length > 0
                 );
               });
@@ -218,7 +221,7 @@ const Dashboard: React.FC = () => {
 
             return {
               ...customer,
-              mentions: messagesResult.length,
+              mentions: count,
               lastConversationsFormatted,
             };
           });
@@ -277,22 +280,6 @@ const Dashboard: React.FC = () => {
     },
     [contactsData],
   );
-
-  // function getContactChannelWithID3(channelID: number): IContact | undefined {
-  //   const channel = contactsData.find(
-  //     (channelFinder) => channelFinder.channel === channelID,
-  //   );
-
-  //   return channel;
-  // }
-
-  // const getContactChannelWithID = (channelID: number): IContact | undefined => {
-  //   const channel = contactsData.find(
-  //     (channelFinder) => channelFinder.channel === channelID,
-  //   );
-
-  //   return channel;
-  // };
 
   const getContactChannelWithID = useMemo(
     () => (channelID: number): IContact | undefined => {
@@ -503,15 +490,15 @@ const Dashboard: React.FC = () => {
 
           {selectedChannel === 2 && readEmail === true && (
             <>
-              <ReadMail>
-                <HeaderReadEmails subject={customerEmail?.subject || ''}>
-                  <button
-                    type="button"
-                    onClick={() => handleReaderEmail([], false)}
-                  >
-                    <FaArrowLeft size={18} />
-                  </button>
-                </HeaderReadEmails>
+              <HeaderReadEmails subject={customerEmail?.subject || ''}>
+                <button
+                  type="button"
+                  onClick={() => handleReaderEmail([], false)}
+                >
+                  <FaArrowLeft size={18} />
+                </button>
+              </HeaderReadEmails>
+              <ContentMessages>
                 {customerEmail?.messagesFormatted.map((email) => (
                   <EmailMessage
                     key={email.timestamp}
@@ -531,7 +518,7 @@ const Dashboard: React.FC = () => {
                     date={email.timestampFormatted}
                   />
                 ))}
-              </ReadMail>
+              </ContentMessages>
               <FooterEmail />
             </>
           )}

@@ -6,7 +6,7 @@ export const InputWrapper = styled.div`
 
   height: 240px;
 
-  margin-bottom: auto;
+  margin-bottom: 0;
   padding-bottom: 15px;
 
   background: var(--white);
