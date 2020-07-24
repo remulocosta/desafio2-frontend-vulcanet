@@ -24,10 +24,13 @@ Por isso, o peçaZap ajuda na agilização do atendimento ao cliente, fazendo co
   <img alt="VulcaNet peçaZap" title="VulcaNet peçaZap" src=".github/login.png"/><br />
 </p>
 <p align="center">
+  <img alt="VulcaNet peçaZap" title="VulcaNet peçaZap" src=".github/chat.png"/><br />
+</p>
+<p align="center">
   <img alt="VulcaNet peçaZap" title="VulcaNet peçaZap" src=".github/caixa_email.png"/><br />
 </p>
 <p align="center">
-  <img alt="VulcaNet peçaZap" title="VulcaNet peçaZap" src=".github/chat.png"/><br />
+  <img alt="VulcaNet peçaZap" title="VulcaNet peçaZap" src=".github/leitor_email.png"/><br />
 </p>
 
 ## Para acessar a aplicação, Login:
