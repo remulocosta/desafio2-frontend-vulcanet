@@ -235,11 +235,19 @@ const Dashboard: React.FC = () => {
     }
   }, [messageRef]);
 
+  const handleCountMentions = useMemo(
+    () => (msg: IChat): number => {
+      return msg.messages.filter((message) => message.seen === false).length;
+    },
+    [],
+  );
+
   const handleSetCustomerChannels = useCallback(
     (handleChat: IChat[]) => {
       const contactsMap = contactsData.map((contact) => {
         let count = 0;
-        handleChat.filter((chat) => {
+
+        handleChat.map((chat) => {
           if (chat.channel === contact.channel) {
             chat.messages.filter((msgSeen) => {
               if (msgSeen.seen === false) {
@@ -248,23 +256,17 @@ const Dashboard: React.FC = () => {
               }
               return false;
             });
-            return true;
+            // count = handleCountMentions(chat);
           }
-          return false;
+          return true;
         });
+
         return { ...contact, mentions: count };
       });
 
       setContactsCustomer(contactsMap);
     },
     [contactsData],
-  );
-
-  const handleCountMentions = useMemo(
-    () => (msg: IChat): number => {
-      return msg.messages.filter((email) => email.seen === false).length;
-    },
-    [],
   );
 
   // function getContactChannelWithID3(channelID: number): IContact | undefined {
@@ -331,7 +333,7 @@ const Dashboard: React.FC = () => {
 
       setSelectedCustomer(customer);
 
-      if (customerChatFilter) {
+      if (customerChatFilter.length) {
         handleSetCustomerChannels(customerChatFilter);
       }
     },
@@ -429,35 +431,37 @@ const Dashboard: React.FC = () => {
               <SearchBarMessage />
 
               <ContentMessages ref={messageRef}>
-                {!!customerChat.length && (
-                  <ContentStartAttendance>
-                    <p>
-                      Atendimento iniciado em{' '}
-                      <strong>{customerChat[0]?.startFormatted}</strong>
-                    </p>
-                    <span />
-                  </ContentStartAttendance>
-                )}
-
-                {customerChat[0]?.messagesFormatted.map((msgChat) => (
-                  <ChannelMessage
-                    key={msgChat.timestamp}
-                    typeMessage={msgChat.type}
-                    seen={msgChat.seen}
-                    content={msgChat.body}
-                    name={
-                      msgChat.type === 'incoming'
-                        ? selectedCustomer?.name
-                        : user?.name
-                    }
-                    imgAvatar={
-                      msgChat.type === 'incoming'
-                        ? selectedCustomer?.photo
-                        : user?.photo
-                    }
-                    date={msgChat.timestampFormatted}
-                  />
-                ))}
+                {!!customerChat.length &&
+                  customerChat.map((chat) => (
+                    <>
+                      <ContentStartAttendance>
+                        <p>
+                          Atendimento iniciado em{' '}
+                          <strong>{chat?.startFormatted}</strong>
+                        </p>
+                        <span />
+                      </ContentStartAttendance>
+                      {chat?.messagesFormatted.map((msgChat) => (
+                        <ChannelMessage
+                          key={msgChat.timestamp}
+                          typeMessage={msgChat.type}
+                          seen={msgChat.seen}
+                          content={msgChat.body}
+                          name={
+                            msgChat.type === 'incoming'
+                              ? selectedCustomer?.name
+                              : user?.name
+                          }
+                          imgAvatar={
+                            msgChat.type === 'incoming'
+                              ? selectedCustomer?.photo
+                              : user?.photo
+                          }
+                          date={msgChat.timestampFormatted}
+                        />
+                      ))}
+                    </>
+                  ))}
               </ContentMessages>
 
               {/* Footer send message */}
@@ -561,7 +565,7 @@ const Dashboard: React.FC = () => {
                     />
                     <span>
                       {last.finishedAtFormatted}{' '}
-                      {`(${last.daysago}  ${last.daysago > 1}dias atrás)`}
+                      {`(${last.daysago} dias atrás)`}
                     </span>
                   </LastAttendance>
                 ))}

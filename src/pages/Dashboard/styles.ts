@@ -190,6 +190,7 @@ export const ContentEmails = styled.div`
 `;
 
 export const ContentMessages = styled.div`
+  padding: 10px;
   display: flex;
   flex: 1;
   flex-direction: column;
@@ -197,8 +198,6 @@ export const ContentMessages = styled.div`
   max-height: calc(100% - 64px - 64px);
   width: 100%;
   overflow-y: scroll;
-
-  padding: 10px;
 
   ::-webkit-scrollbar {
     width: 8px;
