@@ -124,6 +124,7 @@ const Dashboard: React.FC = () => {
 
   const [readEmail, setReadEmail] = useState(false);
   const messageRef = useRef() as React.MutableRefObject<HTMLDivElement>;
+  const emailRef = useRef() as React.MutableRefObject<HTMLDivElement>;
 
   useEffect(() => {
     async function loadContacts(): Promise<void> {
@@ -234,6 +235,14 @@ const Dashboard: React.FC = () => {
       div.scrollTop = div.scrollHeight;
     }
   }, [messageRef]);
+
+  useEffect(() => {
+    const div = emailRef.current;
+
+    if (div) {
+      div.scrollTop = div.scrollHeight;
+    }
+  }, [emailRef]);
 
   const handleCountMentions = useMemo(
     () => (msg: IChat): number => {
@@ -477,7 +486,7 @@ const Dashboard: React.FC = () => {
 
               <HeaderListEmails />
 
-              <ContentEmails ref={messageRef}>
+              <ContentEmails ref={emailRef}>
                 {customerChat.map((msgEmail) => (
                   <EmailCard
                     key={msgEmail.id}

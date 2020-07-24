@@ -147,7 +147,23 @@ export const ContentCustomersHeader = styled.div`
   }
 `;
 
-export const Customers = styled.div``;
+export const Customers = styled.div`
+  max-height: calc(80vh - 56px - 68px);
+  overflow-y: scroll;
+
+  ::-webkit-scrollbar {
+    width: 8px;
+  }
+
+  ::-webkit-scrollbar-thumb {
+    background-color: var(--border-span);
+    border-radius: 4px;
+  }
+
+  ::-webkit-scrollbar-track {
+    background-color: var(--primary);
+  }
+`;
 
 export const ContentAttendance = styled.main`
   display: flex;
@@ -172,7 +188,6 @@ export const ContentEmails = styled.div`
   flex-direction: column;
 
   max-height: calc(100% - 64px - 64px);
-  width: 100%;
   overflow-y: scroll;
 
   ::-webkit-scrollbar {
@@ -195,8 +210,7 @@ export const ContentMessages = styled.div`
   flex: 1;
   flex-direction: column;
 
-  max-height: calc(100% - 64px - 64px);
-  width: 100%;
+  max-height: calc(100vh - 64px - 64px);
   overflow-y: scroll;
 
   ::-webkit-scrollbar {

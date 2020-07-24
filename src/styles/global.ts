@@ -61,8 +61,8 @@ export default createGlobalStyle`
     max-width: 100vw;
     max-height: 100vh;
 
-    min-width: calc(1920px * 0.8);
-    min-height: calc(1080px * 0.8);
+    /* min-width: calc(1920px * 0.8);
+    min-height: calc(1080px * 0.8); */
 
     width: 100%;
     height: 100%;
